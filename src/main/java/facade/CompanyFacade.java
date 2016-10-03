@@ -102,23 +102,53 @@ public class CompanyFacade implements ICompanyFacade {
         return companies;
     }
 
-    
-
     @Override
     public Company createCompany(Company company) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(company);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+
+        }
+        return company;
     }
 
     @Override
     public Company editCompany(Company company) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(company);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+
+        }
+        return company;
     }
 
     @Override
     public Company deleteCompany(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        Company co = null;
+        try {
+            co = em.find(Company.class, id);
+            em.getTransaction().begin();
+            em.remove(co);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+
+        }
+        return co;
     }
-    
+
     @Override
     public List<Company> searchCompanies(String search) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
