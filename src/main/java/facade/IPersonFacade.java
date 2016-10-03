@@ -25,10 +25,10 @@ public interface IPersonFacade {
     public List<Person> getPersons(Hobby hobby);
     
     public Person getPerson(Phone phone);
+    
+    public Person addHobby(Hobby h, Person p);
         
-    public List<Person> searchPersons(String search);
-    
-    
+    public List<Person> searchPersons(String search);    
     
     public Person addPerson(Person person);
     
