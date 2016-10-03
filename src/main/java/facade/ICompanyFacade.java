@@ -16,7 +16,7 @@ import javax.persistence.EntityManager;
  */
 public interface ICompanyFacade {
 
-        public EntityManager getEntityManager();
+    public EntityManager getEntityManager();
 
     public Company getCompany(int id);
 
@@ -24,10 +24,10 @@ public interface ICompanyFacade {
 
     public List<Company> getCompanies(int zipcode);
 
-    public Company getCompanyMinEmp(int employees);
+    public List<Company> getCompanyMinEmp(int employees);
 
     public <List> Company getCompanies(Phone phone);
-    
+
     public List<Company> searchCompanies(String search);
 
     public Company createCompany(Company company);
@@ -35,6 +35,5 @@ public interface ICompanyFacade {
     public Company editCompany(Company company);
 
     public Company deleteCompany(int id);
-    
 
 }
