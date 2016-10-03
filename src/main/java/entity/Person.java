@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Person extends InfoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToMany
-    private List<Hobby> hobbies;
+    private List<Hobby> hobbies = new ArrayList();
     private String firstName;
     private String lastName;
     
@@ -72,6 +73,15 @@ public class Person extends InfoEntity implements Serializable {
 
     public void setHobbies(List<Hobby> hobbies) {
         this.hobbies = hobbies;
+    }
+ /**
+ * adds a hobby to the Person as well as adding this Person to the Hobby!
+ *
+ * @param  hobby the hobby to be added to the Person
+ */
+    public void addHobby(Hobby hobby) {
+        this.hobbies.add(hobby);
+        hobby.getPersons().add(this);      //Thoughts on this approach?
     }
 
     public String getFirstName() {

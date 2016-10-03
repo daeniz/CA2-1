@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -34,7 +35,7 @@ public class InfoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @OneToMany(mappedBy = "infoEntity")
-    private List<Phone> phones;
+    private List<Phone> phones = new ArrayList();  // Was it an option to use Map?
     private String email;
     @ManyToOne
     private Address address;
@@ -84,6 +85,10 @@ public class InfoEntity implements Serializable {
 
     public void setPhones(List<Phone> phones) {
         this.phones = phones;
+    }
+    
+    public void addPhone(Phone phone) {
+        this.phones.add(phone);
     }
 
     public String getEmail() {

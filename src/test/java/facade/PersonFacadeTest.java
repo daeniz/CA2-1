@@ -10,6 +10,8 @@ import entity.Person;
 import entity.Phone;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,6 +21,8 @@ import static org.junit.Assert.*;
  * @author danie
  */
 public class PersonFacadeTest {
+    static EntityManagerFactory emf= Persistence.createEntityManagerFactory("pu_test");
+    private static IPersonFacade facade;
     
     public PersonFacadeTest() {
     }
@@ -31,9 +35,9 @@ public class PersonFacadeTest {
     public void testGetPerson() {
         System.out.println("getPerson");
         int id = 0;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         Person expResult = null;
-        Person result = instance.getPerson(id);
+        Person result = facade.getPerson(id);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -41,9 +45,9 @@ public class PersonFacadeTest {
     @Test
     public void testGetPersons() {
         System.out.println("getPersons");
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         List<Person> expResult = null;
-        List<Person> result = instance.getPersons();
+        List<Person> result = facade.getPersons();
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -52,9 +56,9 @@ public class PersonFacadeTest {
     public void testGetPersons_int() {
         System.out.println("getPersons");
         int zipCode = 0;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         List<Person> expResult = null;
-        List<Person> result = instance.getPersons(zipCode);
+        List<Person> result = facade.getPersons(zipCode);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -63,9 +67,9 @@ public class PersonFacadeTest {
     public void testGetPersons_Hobby() {
         System.out.println("getPersons");
         Hobby hobby = null;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         List<Person> expResult = null;
-        List<Person> result = instance.getPersons(hobby);
+        List<Person> result = facade.getPersons(hobby);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -74,9 +78,9 @@ public class PersonFacadeTest {
     public void testGetPerson_Phone() {
         System.out.println("getPerson");
         Phone phone = null;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         Person expResult = null;
-        Person result = instance.getPerson(phone);
+        Person result = facade.getPerson(phone);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -86,9 +90,9 @@ public class PersonFacadeTest {
         System.out.println("addPhone");
         Phone phone = null;
         Person p = null;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         Person expResult = null;
-        Person result = instance.addPhone(phone, p);
+        Person result = facade.addPhone(phone, p);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -98,9 +102,9 @@ public class PersonFacadeTest {
         System.out.println("addHobby");
         Hobby h = null;
         Person p = null;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         Person expResult = null;
-        Person result = instance.addHobby(h, p);
+        Person result = facade.addHobby(h, p);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -109,9 +113,9 @@ public class PersonFacadeTest {
     public void testSearchPersons() {
         System.out.println("searchPersons");
         String search = "";
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         List<Person> expResult = null;
-        List<Person> result = instance.searchPersons(search);
+        List<Person> result = facade.searchPersons(search);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -120,9 +124,9 @@ public class PersonFacadeTest {
     public void testAddPerson() {
         System.out.println("addPerson");
         Person person = null;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         Person expResult = null;
-        Person result = instance.addPerson(person);
+        Person result = facade.addPerson(person);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -131,9 +135,9 @@ public class PersonFacadeTest {
     public void testEditPerson() {
         System.out.println("editPerson");
         Person person = null;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         Person expResult = null;
-        Person result = instance.editPerson(person);
+        Person result = facade.editPerson(person);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -142,9 +146,9 @@ public class PersonFacadeTest {
     public void testDeletePerson() {
         System.out.println("deletePerson");
         int id = 0;
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         Person expResult = null;
-        Person result = instance.deletePerson(id);
+        Person result = facade.deletePerson(id);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -152,9 +156,9 @@ public class PersonFacadeTest {
     @Test
     public void testGetEntityManager() {
         System.out.println("getEntityManager");
-        PersonFacade instance = new PersonFacade();
+        facade = new PersonFacade(Persistence.createEntityManagerFactory("pu_test"));
         EntityManager expResult = null;
-        EntityManager result = instance.getEntityManager();
+        EntityManager result = facade.getEntityManager();
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }

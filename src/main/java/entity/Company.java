@@ -33,6 +33,15 @@ public class Company extends InfoEntity implements Serializable {
     public Company(){
         
     }
+
+    /**
+     *
+     * @param name Name of the Company
+     * @param description Company description
+     * @param cvr
+     * @param numEmployees
+     * @param marketValue
+     */
     public Company(String name, String description, int cvr, int numEmployees, int marketValue){
         this.name=name;
         this.description=description;
@@ -41,13 +50,7 @@ public class Company extends InfoEntity implements Serializable {
         this.marketValue=marketValue;
     }
 
-    public Company(String name, String description, int cvr, int numEmployees, int marketValue) {
-        this.name = name;
-        this.description = description;
-        this.cvr = cvr;
-        this.numEmployees = numEmployees;
-        this.marketValue = marketValue;
-    }
+    
     
     
 
@@ -118,5 +121,7 @@ public class Company extends InfoEntity implements Serializable {
     public void setMarketValue(int marketValue) {
         this.marketValue = marketValue;
     }
+
+    
     
 }
