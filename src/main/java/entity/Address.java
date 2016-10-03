@@ -6,10 +6,13 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -18,10 +21,19 @@ import javax.persistence.Id;
 @Entity
 public class Address implements Serializable {
 
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String street;
+    private String additionalInfo;
+    @ManyToOne
+    private CityInfo cityInfo;
+    @OneToMany(mappedBy = "address")
+    private List<InfoEntity> infoEntities;
+    
+    
 
     public Integer getId() {
         return id;
@@ -30,6 +42,33 @@ public class Address implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public CityInfo getCityInfo() {
+        return cityInfo;
+    }
+
+    public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
+    }
+    
+    
 
     @Override
     public int hashCode() {
@@ -54,6 +93,14 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return "entity.Address[ id=" + id + " ]";
+    }
+
+    public List<InfoEntity> getInfoEntities() {
+        return infoEntities;
+    }
+
+    public void setInfoEntities(List<InfoEntity> infoEntities) {
+        this.infoEntities = infoEntities;
     }
     
 }

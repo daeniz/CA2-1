@@ -6,30 +6,31 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author danie
  */
 @Entity
-public class Person implements Serializable {
+@DiscriminatorValue (value = "P")
+public class Person extends InfoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @ManyToMany
+    private List<Hobby> hobbies;
+    private String firstName;
+    private String lastName;
+    
 
     @Override
     public int hashCode() {
@@ -54,6 +55,30 @@ public class Person implements Serializable {
     @Override
     public String toString() {
         return "entity.Person[ id=" + id + " ]";
+    }
+
+    public List<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List<Hobby> hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
     
 }
