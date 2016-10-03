@@ -25,6 +25,9 @@ public class CityInfo implements Serializable {
     private int zipCode;
     private String city;
     
+    public CityInfo(){
+        
+    }
 
     public Integer getId() {
         return id;

@@ -33,7 +33,9 @@ public class Address implements Serializable {
     @OneToMany(mappedBy = "address")
     private List<InfoEntity> infoEntities;
     
-    
+    public Address(){
+        
+    }
 
     public Integer getId() {
         return id;
