@@ -19,10 +19,10 @@ import javax.persistence.Query;
  */
 public class CompanyFacade implements ICompanyFacade {
 
-    public static EntityManagerFactory emf;
+    private static EntityManagerFactory emf;
 
     public CompanyFacade(EntityManagerFactory emf) {
-        this.emf = emf;
+        CompanyFacade.emf = emf;
     }
 
     public EntityManager getEntityManager() {

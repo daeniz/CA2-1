@@ -10,12 +10,24 @@ import entity.Person;
 import entity.Phone;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
  * @author dennisschmock
  */
 public class PersonFacade implements IPersonFacade {
+    
+    private static EntityManagerFactory emf;
+
+    public PersonFacade(EntityManagerFactory emf) {
+        PersonFacade.emf = emf;
+    }
+
+  
+   
+    
+    
 
     @Override
     public Person getPerson(int id) {
@@ -74,7 +86,7 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public EntityManager getEntityManager() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return emf.createEntityManager();
     }
     
 }
