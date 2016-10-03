@@ -26,6 +26,15 @@ public class Phone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    private int number;
+    private String description;
+    
+    public Phone(){
+        
+    }
+    public Phone(int number){
+        this.number=number;
+    }
 
     public Integer getId() {
         return id;
@@ -34,6 +43,32 @@ public class Phone implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public InfoEntity getInfoEntity() {
+        return infoEntity;
+    }
+
+    public void setInfoEntity(InfoEntity infoEntity) {
+        this.infoEntity = infoEntity;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    
 
     @Override
     public int hashCode() {

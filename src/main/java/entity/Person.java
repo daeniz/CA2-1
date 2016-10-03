@@ -31,6 +31,10 @@ public class Person extends InfoEntity implements Serializable {
     private String firstName;
     private String lastName;
     
+    public Person(){
+        
+    }
+    
 
     @Override
     public int hashCode() {

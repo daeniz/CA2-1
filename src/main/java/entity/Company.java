@@ -29,6 +29,10 @@ public class Company extends InfoEntity implements Serializable {
     private int cvr;
     private int numEmployees;
     private int marketValue;
+    
+    public Company(){
+        
+    }
 
 
     @Override

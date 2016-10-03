@@ -29,6 +29,10 @@ public class Hobby implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    public Hobby(){
+        
+    }
 
     public Integer getId() {
         return id;
