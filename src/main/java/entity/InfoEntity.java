@@ -6,22 +6,41 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author danie
  */
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn (name = "DC", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorValue (value= "I")
 public class InfoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @OneToMany(mappedBy = "infoEntity")
+    private List<Phone> phones;
+    @OneToMany(mappedBy = "infoEntity")
+    private List<Address> addresses;
+    private String email;
+    
+    public InfoEntity(){
+        
+    }
 
     public Integer getId() {
         return id;
