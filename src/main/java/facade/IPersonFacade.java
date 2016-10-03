@@ -26,6 +26,8 @@ public interface IPersonFacade {
     
     public Person getPerson(Phone phone);
     
+    public Person addPhone(Phone phone, Person p);
+    
     public Person addHobby(Hobby h, Person p);
         
     public List<Person> searchPersons(String search);    

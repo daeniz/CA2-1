@@ -14,22 +14,24 @@ import java.util.List;
  * @author dennisschmock
  */
 public interface ICompanyFacade {
-      
-    public Company getCompany(int cvr);
-       
-      public List<Company> getCompanies();
-       public List<Company> getCompanies(int zipcode);
-       
-       public Company getCompanyMinEmp(int employees);
-       
-       public <List> Company getCompanies(Phone phone);
-       
-       public Company createCompany(Company company);
-       
-       public Company editCompany(Company company);
-       
-       public Company deleteCompany(int id);
-       
-       
+
+    public Company getCompany(int id);
+
+    public List<Company> getCompanies();
+
+    public List<Company> getCompanies(int zipcode);
+
+    public Company getCompanyMinEmp(int employees);
+
+    public <List> Company getCompanies(Phone phone);
+    
+    public List<Company> searchCompanies(String search);
+
+    public Company createCompany(Company company);
+
+    public Company editCompany(Company company);
+
+    public Company deleteCompany(int id);
+    
 
 }
