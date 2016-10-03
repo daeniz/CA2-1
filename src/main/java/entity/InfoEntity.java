@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -34,9 +35,9 @@ public class InfoEntity implements Serializable {
     private Integer id;
     @OneToMany(mappedBy = "infoEntity")
     private List<Phone> phones;
-    @OneToMany(mappedBy = "infoEntity")
-    private List<Address> addresses;
     private String email;
+    @ManyToOne
+    private Address address;
     
     public InfoEntity(){
         
@@ -49,6 +50,8 @@ public class InfoEntity implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    
 
     @Override
     public int hashCode() {
@@ -73,6 +76,30 @@ public class InfoEntity implements Serializable {
     @Override
     public String toString() {
         return "entity.InfoEntity[ id=" + id + " ]";
+    }
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
     
 }
