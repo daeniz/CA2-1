@@ -3,6 +3,12 @@
   <persistence-unit name="PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entity.Phone</class>
+    <class>entity.InfoEntity</class>
+    <class>entity.Address</class>
+    <class>entity.CityInfo</class>
+    <class>entity.Person</class>
+    <class>entity.Company</class>
+    <class>entity.Hobby</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test?zeroDateTimeBehavior=convertToNull"/>
