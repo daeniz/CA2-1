@@ -33,6 +33,13 @@ public class Company extends InfoEntity implements Serializable {
     public Company(){
         
     }
+    public Company(String name, String description, int cvr, int numEmployees, int marketValue){
+        this.name=name;
+        this.description=description;
+        this.cvr=cvr;
+        this.numEmployees=numEmployees;
+        this.marketValue=marketValue;
+    }
 
 
     @Override

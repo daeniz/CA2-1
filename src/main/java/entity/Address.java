@@ -36,6 +36,9 @@ public class Address implements Serializable {
     public Address(){
         
     }
+    public Address(String street, String additionalInfo, CityInfo cityInfo){
+        
+    }
 
     public Integer getId() {
         return id;

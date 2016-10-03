@@ -33,7 +33,16 @@ public class CompanyFacadeTest {
         EntityManager em = emf.createEntityManager();
         try{
             em.getTransaction().begin();
-            em.createQuery("delete from Person").executeUpdate(); //Ehm... Somthing is not working
+            em.createQuery("delete from Company").executeUpdate(); //Ehm... Somthing is not working
+            em.createQuery("delete from Phone").executeUpdate();
+            em.createQuery("delete from Address").executeUpdate();
+            em.createQuery("delete from Hobby").executeUpdate();
+            
+            
+            
+            
+            
+            
 //            Person p1= new Person("aa","bb","123");
 //            Person p2= new Person("cc","dd","123");
 //            em.persist(p1);
@@ -50,32 +59,28 @@ public class CompanyFacadeTest {
     public void testGetCompany() {
         System.out.println("getCompany");
         int id = 0;
-        CompanyFacade instance = null;
+        
         Company expResult = null;
-        Company result = instance.getCompany(id);
+        Company result = facade.getCompany(id);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
     public void testGetCompanies_0args() {
         System.out.println("getCompanies");
-        CompanyFacade instance = null;
         List<Company> expResult = null;
-        List<Company> result = instance.getCompanies();
+        List<Company> result = facade.getCompanies();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
-    public void testGetCompanies_int() {
+    public void testGetCompanies() {
         System.out.println("getCompanies");
         int zipcode = 0;
         CompanyFacade instance = null;
         List<Company> expResult = null;
         List<Company> result = instance.getCompanies(zipcode);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
