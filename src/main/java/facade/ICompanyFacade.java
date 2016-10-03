@@ -8,12 +8,15 @@ package facade;
 import entity.Company;
 import entity.Phone;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
  * @author dennisschmock
  */
 public interface ICompanyFacade {
+
+        public EntityManager getEntityManager();
 
     public Company getCompany(int id);
 
