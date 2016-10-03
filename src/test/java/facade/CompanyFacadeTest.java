@@ -126,7 +126,16 @@ public class CompanyFacadeTest {
         fail("The test case is a prototype.");
     }
 
-   
+//    @Test
+//    public void testGetCompanies_Phone() {
+//        System.out.println("getCompanies");
+//        Phone phone = null;
+//        CompanyFacade instance = null;
+//        Company expResult = null;
+//        Company result = instance.getCompanies(phone);
+//        assertEquals(expResult, result);
+//        fail("The test case is a prototype.");
+//    }
 
     @Test
     @Ignore

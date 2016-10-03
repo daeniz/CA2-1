@@ -90,12 +90,12 @@ public class CompanyFacade implements ICompanyFacade {
     @Override
     public List<Company> getCompanies(Phone phone) {
         EntityManager em = this.getEntityManager();
-        List<Company> companies = null;
+        List<Company> companies;
         try {
-            Query q = em.createQuery("Select c FROM Company c WHERE c.phones as :1");
-            q.setParameter("1", phone);
-            companies = q.getResultList();
+            Query q = em.createQuery("Select c FROM InfoEntity c WHERE c.phones = ?1");
+            q.setParameter(1, phone);
 
+            companies = q.getResultList();
         } finally {
             em.close();
         }

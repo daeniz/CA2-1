@@ -8,10 +8,12 @@ package entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,8 +36,9 @@ public class InfoEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToMany(mappedBy = "infoEntity")
-    private List<Phone> phones = new ArrayList();  // Was it an option to use Map?
+    
+    @OneToMany(mappedBy = "infoEntity",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    private List<Phone> phones = new ArrayList();
     private String email;
     @ManyToOne
     private Address address;
@@ -53,7 +56,9 @@ public class InfoEntity implements Serializable {
     }
     
     
-
+    public void addPhone(Phone phone){
+        this.phones.add(phone);
+    }
     @Override
     public int hashCode() {
         int hash = 0;
@@ -87,9 +92,7 @@ public class InfoEntity implements Serializable {
         this.phones = phones;
     }
     
-    public void addPhone(Phone phone) {
-        this.phones.add(phone);
-    }
+   
 
     public String getEmail() {
         return email;
