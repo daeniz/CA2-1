@@ -26,7 +26,7 @@ public interface ICompanyFacade {
 
     public List<Company> getCompanyMinEmp(int employees);
 
-    public <List> Company getCompanies(Phone phone);
+    public List<Company> getCompanies(Phone phone);
 
     public List<Company> searchCompanies(String search);
 

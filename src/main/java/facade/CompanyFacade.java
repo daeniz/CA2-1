@@ -19,10 +19,10 @@ import javax.persistence.Query;
  */
 public class CompanyFacade implements ICompanyFacade {
 
-    public static EntityManagerFactory emf;
+    private static EntityManagerFactory emf;
 
     public CompanyFacade(EntityManagerFactory emf) {
-        this.emf = emf;
+        CompanyFacade.emf = emf;
     }
 
     public EntityManager getEntityManager() {
@@ -77,7 +77,7 @@ public class CompanyFacade implements ICompanyFacade {
         List<Company> companies = null;
         try {
             Query q = em.createQuery("Select c FROM Company c where c.numEmployees > :1");
-            q.setParameter("2",employees);
+            q.setParameter("2", employees);
             companies = q.getResultList();
 
         } finally {
@@ -88,27 +88,69 @@ public class CompanyFacade implements ICompanyFacade {
     }
 
     @Override
-    public <List> Company getCompanies(Phone phone) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public List<Company> getCompanies(Phone phone) {
+        EntityManager em = this.getEntityManager();
+        List<Company> companies = null;
+        try {
+            Query q = em.createQuery("Select c FROM Company c WHERE c.phones as :1");
+            q.setParameter("1", phone);
+            companies = q.getResultList();
 
-    @Override
-    public List<Company> searchCompanies(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } finally {
+            em.close();
+        }
+        return companies;
     }
 
     @Override
     public Company createCompany(Company company) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(company);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+
+        }
+        return company;
     }
 
     @Override
     public Company editCompany(Company company) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(company);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+
+        }
+        return company;
     }
 
     @Override
     public Company deleteCompany(int id) {
+        EntityManager em = this.getEntityManager();
+        Company co = null;
+        try {
+            co = em.find(Company.class, id);
+            em.getTransaction().begin();
+            em.remove(co);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+
+        }
+        return co;
+    }
+
+    @Override
+    public List<Company> searchCompanies(String search) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
