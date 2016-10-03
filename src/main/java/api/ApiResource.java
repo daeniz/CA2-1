@@ -36,9 +36,17 @@ public class ApiResource {
      * @return an instance of java.lang.String
      */
     @GET
+    @Path("complete")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
+    public String getAllPersonsComplete() {
         //TODO return proper representation object
+        throw new UnsupportedOperationException();
+    }
+    
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getPersonWithID() {
         throw new UnsupportedOperationException();
     }
 
