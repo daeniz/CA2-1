@@ -9,6 +9,7 @@ import entity.Hobby;
 import entity.Person;
 import entity.Phone;
 import java.util.List;
+import javax.persistence.EntityManager;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -17,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author danie
  */
-public class IPersonFacadeTest {
+public class PersonFacadeTest {
     
-    public IPersonFacadeTest() {
+    public PersonFacadeTest() {
     }
     
     @Before
@@ -27,14 +28,10 @@ public class IPersonFacadeTest {
     }
 
     @Test
-    public void testGetPerson_int() {
-        
-        
-        
-        
+    public void testGetPerson() {
         System.out.println("getPerson");
         int id = 0;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         Person expResult = null;
         Person result = instance.getPerson(id);
         assertEquals(expResult, result);
@@ -42,9 +39,9 @@ public class IPersonFacadeTest {
     }
 
     @Test
-    public void testGetPersons_0args() {
+    public void testGetPersons() {
         System.out.println("getPersons");
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         List<Person> expResult = null;
         List<Person> result = instance.getPersons();
         assertEquals(expResult, result);
@@ -55,7 +52,7 @@ public class IPersonFacadeTest {
     public void testGetPersons_int() {
         System.out.println("getPersons");
         int zipCode = 0;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         List<Person> expResult = null;
         List<Person> result = instance.getPersons(zipCode);
         assertEquals(expResult, result);
@@ -66,7 +63,7 @@ public class IPersonFacadeTest {
     public void testGetPersons_Hobby() {
         System.out.println("getPersons");
         Hobby hobby = null;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         List<Person> expResult = null;
         List<Person> result = instance.getPersons(hobby);
         assertEquals(expResult, result);
@@ -77,7 +74,7 @@ public class IPersonFacadeTest {
     public void testGetPerson_Phone() {
         System.out.println("getPerson");
         Phone phone = null;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         Person expResult = null;
         Person result = instance.getPerson(phone);
         assertEquals(expResult, result);
@@ -89,7 +86,7 @@ public class IPersonFacadeTest {
         System.out.println("addPhone");
         Phone phone = null;
         Person p = null;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         Person expResult = null;
         Person result = instance.addPhone(phone, p);
         assertEquals(expResult, result);
@@ -101,7 +98,7 @@ public class IPersonFacadeTest {
         System.out.println("addHobby");
         Hobby h = null;
         Person p = null;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         Person expResult = null;
         Person result = instance.addHobby(h, p);
         assertEquals(expResult, result);
@@ -112,7 +109,7 @@ public class IPersonFacadeTest {
     public void testSearchPersons() {
         System.out.println("searchPersons");
         String search = "";
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         List<Person> expResult = null;
         List<Person> result = instance.searchPersons(search);
         assertEquals(expResult, result);
@@ -123,7 +120,7 @@ public class IPersonFacadeTest {
     public void testAddPerson() {
         System.out.println("addPerson");
         Person person = null;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         Person expResult = null;
         Person result = instance.addPerson(person);
         assertEquals(expResult, result);
@@ -134,7 +131,7 @@ public class IPersonFacadeTest {
     public void testEditPerson() {
         System.out.println("editPerson");
         Person person = null;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         Person expResult = null;
         Person result = instance.editPerson(person);
         assertEquals(expResult, result);
@@ -145,58 +142,21 @@ public class IPersonFacadeTest {
     public void testDeletePerson() {
         System.out.println("deletePerson");
         int id = 0;
-        IPersonFacade instance = new IPersonFacadeImpl();
+        PersonFacade instance = new PersonFacade();
         Person expResult = null;
         Person result = instance.deletePerson(id);
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
 
-    public class IPersonFacadeImpl implements IPersonFacade {
-
-        public Person getPerson(int id) {
-            return null;
-        }
-
-        public List<Person> getPersons() {
-            return null;
-        }
-
-        public List<Person> getPersons(int zipCode) {
-            return null;
-        }
-
-        public List<Person> getPersons(Hobby hobby) {
-            return null;
-        }
-
-        public Person getPerson(Phone phone) {
-            return null;
-        }
-
-        public Person addPhone(Phone phone, Person p) {
-            return null;
-        }
-
-        public Person addHobby(Hobby h, Person p) {
-            return null;
-        }
-
-        public List<Person> searchPersons(String search) {
-            return null;
-        }
-
-        public Person addPerson(Person person) {
-            return null;
-        }
-
-        public Person editPerson(Person person) {
-            return null;
-        }
-
-        public Person deletePerson(int id) {
-            return null;
-        }
+    @Test
+    public void testGetEntityManager() {
+        System.out.println("getEntityManager");
+        PersonFacade instance = new PersonFacade();
+        EntityManager expResult = null;
+        EntityManager result = instance.getEntityManager();
+        assertEquals(expResult, result);
+        fail("The test case is a prototype.");
     }
     
 }
