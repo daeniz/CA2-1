@@ -77,7 +77,7 @@ public class CompanyFacade implements ICompanyFacade {
         List<Company> companies = null;
         try {
             Query q = em.createQuery("Select c FROM Company c where c.numEmployees > :1");
-            q.setParameter("2",employees);
+            q.setParameter("2", employees);
             companies = q.getResultList();
 
         } finally {
@@ -88,14 +88,21 @@ public class CompanyFacade implements ICompanyFacade {
     }
 
     @Override
-    public <List> Company getCompanies(Phone phone) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Company> getCompanies(Phone phone) {
+        EntityManager em = this.getEntityManager();
+        List<Company> companies = null;
+        try {
+            Query q = em.createQuery("Select c FROM Company c WHERE c.phones as :1");
+            q.setParameter("1", phone);
+            companies = q.getResultList();
+
+        } finally {
+            em.close();
+        }
+        return companies;
     }
 
-    @Override
-    public List<Company> searchCompanies(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
     public Company createCompany(Company company) {
@@ -109,6 +116,11 @@ public class CompanyFacade implements ICompanyFacade {
 
     @Override
     public Company deleteCompany(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<Company> searchCompanies(String search) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
