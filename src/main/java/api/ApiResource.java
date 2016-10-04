@@ -12,6 +12,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -44,12 +45,94 @@ public class ApiResource {
     }
     
     @GET
-    @Path("{id}")
+    @Path("complete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPersonWithID() {
+    public String getPersonCompleteWithID(@PathParam("id") int id) {
+        throw new UnsupportedOperationException();
+    }
+    
+    @GET
+    @Path("contactinfo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllPersonsContactinfo() {
+        throw new UnsupportedOperationException();
+    }
+    
+    
+    @GET
+    @Path("contactinfo/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getPersonContactinfoWithID(@PathParam("id") int id) {
+        throw new UnsupportedOperationException();
+    }
+    
+    @GET
+    @Path("{hobby}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllPersonsWithHobby(@PathParam("hobby") String hobby) {
         throw new UnsupportedOperationException();
     }
 
+    @GET
+    @Path("person/complete/{phone}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getPersonWithPhone(@PathParam("phone") String phone) {
+        throw new UnsupportedOperationException();
+    }
+    
+    @GET
+    @Path("person/complete/{zip}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getPersonWithZip(@PathParam("zip") String phone) {
+        throw new UnsupportedOperationException();
+    }
+    
+    @GET
+    @Path("person/search/{searchstring}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String smartSearch(@PathParam("searchstring") String searchStr) {
+        throw new UnsupportedOperationException();
+    }
+    
+    
+    
+    
+    @GET
+    @Path("company/complete")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllCompaniesComplete() {
+        throw new UnsupportedOperationException();
+    }
+    
+    @GET
+    @Path("company/complete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCompanyCompleteWithID(@PathParam("id") int id) {
+        throw new UnsupportedOperationException();
+    }
+    
+    @GET
+    @Path("company/complete/{zip}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCompanyCompleteWithZip(@PathParam("zip") int zip) {
+        throw new UnsupportedOperationException();
+    }
+    
+    
+    @GET
+    @Path("company/contactinfo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllCompaniesContactinfo() {
+        throw new UnsupportedOperationException();
+    }
+    
+    @GET
+    @Path("company/contactinfo/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCompanyContactinfoWithID(@PathParam("id") int id) {
+        throw new UnsupportedOperationException();
+    }
+    
     /**
      * PUT method for updating or creating an instance of ApiResource
      * @param content representation for the resource
