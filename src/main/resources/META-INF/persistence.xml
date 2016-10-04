@@ -11,10 +11,10 @@
     <class>entity.Phone</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.0.111:3306/restricted?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.user" value="restricteduser"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ca2?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="restictedpw"/>
+      <property name="javax.persistence.jdbc.password" value="Ospekos_22"/>
       <property name="javax.persistence.sql-load-script-source" value="scripts/populateZip.sql"/>
       <property name="javax.persistence.sql-load-script-source" value="scripts/TestData.sql"/>
     </properties>

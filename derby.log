@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Tue Oct 04 19:31:08 CEST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0157-90bf-c081-0000054f40c8 
-on database directory C:\Users\Daniel\Documents\NetBeansProjects\CA2\memory\testDB with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
-Loaded from file:/C:/Users/Daniel/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+Tue Oct 04 22:09:05 CEST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0157-9150-5cd7-00000e8e4b10 
+on database directory C:\NetBeansProjects\CA2\memory\testDB with class loader sun.misc.Launcher$AppClassLoader@75b84c92 
+Loaded from file:/C:/Users/Dennis/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_92-b14
-user.dir=C:\Users\Daniel\Documents\NetBeansProjects\CA2
+java.runtime.version=1.8.0_60-b27
+user.dir=C:\NetBeansProjects\CA2
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
