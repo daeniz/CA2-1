@@ -182,6 +182,7 @@ public class CompanyFacadeTest {
 //    }
 
     @Test
+    @Ignore
     public void testSearchCompanies() {
         System.out.println("searchCompanies");
         String search = "re";
@@ -200,7 +201,6 @@ public class CompanyFacadeTest {
     }
 
     @Test
-    @Ignore
     public void testEditCompany() {
         System.out.println("editCompany");
         Company company = facade.getCompany(c1.getId());
@@ -224,7 +224,7 @@ public class CompanyFacadeTest {
     @Test
     public void testDeleteCompany() {
         System.out.println("deleteCompany");
-        int id = 3;
+        int id = c2.getId();
         Company expResult = facade.getCompany(id);
         
         Company result = facade.deleteCompany(id);
