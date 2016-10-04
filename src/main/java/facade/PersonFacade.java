@@ -64,7 +64,7 @@ public class PersonFacade implements IPersonFacade {
         List<Person> persons = null;
         try {
             CityInfo ci = em.find(CityInfo.class, zipCode);
-            Query q = em.createQuery("Select i FROM InfoEntity i WHERE i.address.cityInfo.zipCode = ?1");
+            Query q = em.createQuery("Select i FROM Person i WHERE i.address.cityInfo.zipCode = ?1");
             q.setParameter("1", zipCode);
             persons = q.getResultList();
 
