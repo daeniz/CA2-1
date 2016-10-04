@@ -7,6 +7,7 @@ package entityTester;
 
 import entity.Address;
 import entity.Company;
+import entity.Hobby;
 import entity.Person;
 import entity.Phone;
 import facade.CompanyFacade;
@@ -30,11 +31,6 @@ public class Tester {
     public static void main(String[] args) {
         Persistence.generateSchema("PU", null);
 
-        Person p1 = new Person("Dennis", "Schmock");
-        Person p2 = new Person("1Dennis", "Schmock");
-        Person p3 = new Person("2Dennis", "Schmock");
-        Person p4 = new Person("3Dennis", "Schmock");
-
         Company c1 = new Company("My company", "Nice", 1111, 1111, 1111);
         Company c2 = new Company("1My company", "Nice", 1111, 1111, 1111);
         Company c3 = new Company("2My company", "Nice", 1111, 1111, 1111);
@@ -56,34 +52,51 @@ public class Tester {
         System.out.println(phone.getId());
 
         CF.deleteCompany(c4.getId());
-        
+
         c1 = CF.addAddress(c1, a1, 2600);
         System.out.println(c1.getAddress().getCityInfo());
-        
+
         System.out.println("Address for c1: " + c1.getAddress().getStreet());
-       // System.out.println("Address for c1: " + c1.getAddress().getCityInfo().getCity());
+        // System.out.println("Address for c1: " + c1.getAddress().getCityInfo().getCity());
         //System.out.println("Address for c1: " + c1.getAddress().getStreet());
-        
+
         List<Company> cs = CF.getCompanies();
         for (Company c : cs) {
             System.out.println(c.getName());
         }
-        
+
         List<Company> companies = CF.getCompanyMinEmp(1200);
         for (Company company : companies) {
-            System.out.println(company.getName());   
-        }
-        
-         List<Company> companiesZip =  CF.getCompanies(2600);
-         
-         System.out.println("Size is: " + companiesZip.size());
-         for (Company company : companiesZip) {
-             System.out.println(company.getName());
+            System.out.println(company.getName());
         }
 
-        
+        List<Company> companiesZip = CF.getCompanies(2600);
 
-        // System.out.println(CF.getCompany(phone));
-        // PF.addPerson(p1);
+        System.out.println("Size is: " + companiesZip.size());
+        for (Company company : companiesZip) {
+            System.out.println(company.getName());
+        }
+
+        //Testing Personfacade
+        Person p1 = new Person("Dennis", "Schmock");
+        Person p2 = new Person("1Dennis", "Schmock");
+        Person p3 = new Person("2Dennis", "Schmock");
+        Person p4 = new Person("3Dennis", "Schmock");
+        Address a2 = new Address("Nørgade", "Somewhere nice");
+        Phone phone1 = new Phone(11554455, "Home");
+        Hobby hobby = new Hobby("Golf", "Boring sport with big clubs and small balls.");
+        
+        p1.addHobby(hobby);
+        p1.addPhone(phone1);
+        p1.setAddress(a2);
+        
+        
+        PF.addPerson(p1);
+        PF.addPerson(p2);
+        PF.addPerson(p3);
+        PF.addPerson(p4);
+        
+        PF.addAddress(p1, a2, 2600);
+
     }
 }

@@ -41,7 +41,7 @@ public class InfoEntity implements Serializable {
     private List<Phone> phones = new ArrayList();
     private String email;
     
-    @ManyToOne
+    @ManyToOne (cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Address address;
     
     public InfoEntity(){

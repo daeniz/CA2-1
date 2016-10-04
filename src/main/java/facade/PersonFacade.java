@@ -5,6 +5,8 @@
  */
 package facade;
 
+import entity.Address;
+import entity.CityInfo;
 import entity.Company;
 import entity.Hobby;
 import entity.Person;
@@ -58,7 +60,18 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public List<Person> getPersons(int zipCode) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        List<Person> persons = null;
+        try {
+            CityInfo ci = em.find(CityInfo.class, zipCode);
+            Query q = em.createQuery("Select i FROM InfoEntity i WHERE i.address.cityInfo.zipCode = ?1");
+            q.setParameter("1", zipCode);
+            persons = q.getResultList();
+
+        } finally {
+            em.close();
+        }
+        return persons;
     }
 
     @Override
@@ -66,7 +79,7 @@ public class PersonFacade implements IPersonFacade {
         EntityManager em = this.getEntityManager();
         List<Person> persons = new ArrayList();
         try {
-            Query q = em.createQuery("Select p From Person p WHERE p.hobbies = :1");
+            Query q = em.createQuery("Select p From Person p WHERE p.hobbies = ?1");
             q.setParameter(1, hobby);
             persons = q.getResultList();
         } finally {
@@ -164,7 +177,7 @@ public class PersonFacade implements IPersonFacade {
         Person person = null;
 
         try {
-           person = em.find(Person.class, id);
+            person = em.find(Person.class, id);
             em.getTransaction().begin();
             em.remove(person);
             em.getTransaction().commit();
@@ -174,6 +187,26 @@ public class PersonFacade implements IPersonFacade {
         return person;
     }
 
+    public Person addAddress(Person p, Address address, int zipcode) {
+        EntityManager em = this.getEntityManager();
+        CityInfo ci = null;
+        try {
+            ci = em.find(CityInfo.class, zipcode);
+            System.out.println(ci.getZipCode());
+            address.addInfoEntity(p);
+            address.setCityInfo(ci);
+            em.getTransaction().begin();
+            em.merge(p);
+            em.merge(address);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+
+        }
+        return p;
+    };
+    
     @Override
     public EntityManager getEntityManager() {
         return emf.createEntityManager();

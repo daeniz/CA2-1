@@ -5,6 +5,7 @@
  */
 package facade;
 
+import entity.Address;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
@@ -40,6 +41,8 @@ public interface IPersonFacade {
     public Person editPerson(Person person);
     
     public Person deletePerson(int id);
+    
+    public Person addAddress(Person p, Address address, int zipcode);
     
     
     
