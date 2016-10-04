@@ -10,14 +10,14 @@ import javax.ws.rs.core.Application;
 
 /**
  *
- * @author edipetres
+ * @author dennisschmock
  */
 @javax.ws.rs.ApplicationPath("api")
 public class ApplicationConfig extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        Set<Class<?>> resources = new java.util.HashSet<>();
+        Set<Class<?>> resources = new java.util.HashSet();
         addRestResourceClasses(resources);
         return resources;
     }
@@ -29,7 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(api.ApiResource.class);
+        resources.add(api.PersonService.class);
+       
     }
     
 }
