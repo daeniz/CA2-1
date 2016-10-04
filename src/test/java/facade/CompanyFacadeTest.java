@@ -33,6 +33,7 @@ public class CompanyFacadeTest {
     Company c3;
     Hobby h1;
     CityInfo ci1;
+    Address a1;
             
             
     public CompanyFacadeTest() {
@@ -58,9 +59,11 @@ public class CompanyFacadeTest {
             c3 = new Company("CPH-Business", "School", 01236,200,200000);
             h1 = new Hobby("Jammin'","Playing Dirty Hippie-music");
             ci1 = new CityInfo(2800,"Lyngby");
-            Address a1 = new Address("Nørgaardsvej","30",ci1);
+            a1 = new Address("Nørgaardsvej","30",ci1);
             Address a2 = new Address("Nørgaardsvej","30",ci1);
             Phone ph1 = new Phone(11223344);
+            Phone ph2 = new Phone(11223344);
+            Phone ph3 = new Phone(11223344);
             c1.addPhone(ph1);
             c1.setAddress(a1);
             a1.setCityInfo(ci1);
@@ -98,6 +101,7 @@ public class CompanyFacadeTest {
     public void testGetCompanies() {
         System.out.println("getCompanies");
         List<Company> expResult = null;
+        int expSize = 2;
         List<Company> result = facade.getCompanies();
         assertEquals(expResult, result);
     }
