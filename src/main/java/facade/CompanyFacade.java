@@ -5,6 +5,8 @@
  */
 package facade;
 
+import entity.Address;
+import entity.CityInfo;
 import entity.Company;
 import entity.Phone;
 import java.util.ArrayList;
@@ -61,8 +63,8 @@ public class CompanyFacade implements ICompanyFacade {
         EntityManager em = this.getEntityManager();
         List<Company> companies = null;
         try {
-            
-            Query q = em.createQuery("Select c FROM Company c where c.address.cityinfo.zipcode = :1");
+            CityInfo ci = em.find(CityInfo.class, zipcode);
+            Query q = em.createQuery("Select i FROM InfoEntity i WHERE i.address.cityInfo.zipCode = ?1");
             q.setParameter("1", zipcode);
             companies = q.getResultList();
 
@@ -77,8 +79,8 @@ public class CompanyFacade implements ICompanyFacade {
         EntityManager em = this.getEntityManager();
         List<Company> companies = null;
         try {
-            Query q = em.createQuery("Select c FROM Company c where c.numEmployees > :1");
-            q.setParameter("2", employees);
+            Query q = em.createQuery("Select c FROM Company c where c.numEmployees > ?1");
+            q.setParameter("1", employees);
             companies = q.getResultList();
 
         } finally {
@@ -89,18 +91,18 @@ public class CompanyFacade implements ICompanyFacade {
     }
 
     @Override
-    public List<Company> getCompanies(Phone phone) {
+    public Company getCompany(Phone phone) {
         EntityManager em = this.getEntityManager();
-        List<Company> companies;
+        Company company = null;
         try {
-            Query q = em.createQuery("Select c FROM InfoEntity c WHERE c.phones = ?1");
+            Query q = em.createQuery("Select p FROM InfoEntity p WHERE p.phones = ?1");
             q.setParameter(1, phone);
 
-            companies = q.getResultList();
+            company = (Company) q.getSingleResult();
         } finally {
             em.close();
         }
-        return companies;
+        return company;
     }
 
     @Override
@@ -149,6 +151,26 @@ public class CompanyFacade implements ICompanyFacade {
         }
         return co;
     }
+
+    public Company addAddress(Company co, Address address, int zipcode) {
+        EntityManager em = this.getEntityManager();
+        CityInfo ci = null;
+        try {
+            ci = em.find(CityInfo.class, zipcode);
+            address.addInfoEntity(co);
+            address.setCityInfo(ci);
+            em.getTransaction().begin();
+            em.merge(ci);
+            em.merge(co);
+            em.merge(address);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+
+        }
+        return co;
+    };
 
     @Override
     public List<Company> searchCompanies(String search) {
