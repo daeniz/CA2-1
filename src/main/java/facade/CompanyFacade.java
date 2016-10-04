@@ -61,6 +61,7 @@ public class CompanyFacade implements ICompanyFacade {
         EntityManager em = this.getEntityManager();
         List<Company> companies = null;
         try {
+            
             Query q = em.createQuery("Select c FROM Company c where c.address.cityinfo.zipcode = :1");
             q.setParameter("1", zipcode);
             companies = q.getResultList();
