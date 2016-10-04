@@ -28,12 +28,27 @@ public class CompanyFacadeTest {
     static EntityManagerFactory emf= Persistence.createEntityManagerFactory("pu_test");
     private static ICompanyFacade facade;
     
+    Person p1;
+    Person p2;
+    Person p3;
     Company c1;
     Company c2;
     Company c3;
     Hobby h1;
+    Hobby h2;
+    Hobby h3;
     CityInfo ci1;
+    CityInfo ci2;
+    CityInfo ci3;
     Address a1;
+    Address a2;
+    Address a3;
+    Phone ph1;
+    Phone ph2;
+    Phone ph3;
+    Phone ph4;
+    Phone ph5;
+    Phone ph6;
             
             
     public CompanyFacadeTest() {
@@ -50,31 +65,54 @@ public class CompanyFacadeTest {
             em.createQuery("delete from Phone").executeUpdate();
             em.createQuery("delete from Address").executeUpdate();
             em.createQuery("delete from Hobby").executeUpdate();
+            em.createQuery("delete from CityInfo").executeUpdate();
+            em.createQuery("delete from Person").executeUpdate();
             
             
-            
-            Person p1= new Person("Bob","Marley");
+            p1= new Person("Bob","Marley");
+            p2= new Person("John","Green");
+            p3= new Person("James","Brown");
             c1 = new Company("CPH-Business", "School", 01234,200,200000); //String name, String description, int cvr, int numEmployees, int marketValue
             c2 = new Company("Vaskeriet", "School Building", 01235,200,200000);
-            c3 = new Company("CPH-Business", "School", 01236,200,200000);
+            c3 = new Company("Zoo", "Animal storage", 01236,720,7600000);
             h1 = new Hobby("Jammin'","Playing Dirty Hippie-music");
+            h2 = new Hobby("Dancing","Erotic temptation");
+            h3 = new Hobby("Fishing","Using nets and stuff");
             ci1 = new CityInfo(2800,"Lyngby");
+            ci2 = new CityInfo(2670,"Greve");
+            ci3 = new CityInfo(2000,"Frederiksberg");
             a1 = new Address("Nørgaardsvej","30",ci1);
-            Address a2 = new Address("Nørgaardsvej","30",ci1);
-            Phone ph1 = new Phone(11223344);
-            Phone ph2 = new Phone(11223344);
-            Phone ph3 = new Phone(11223344);
+            a2 = new Address("Gl Kongevej","22b",ci3);
+            a3 = new Address("Strandvejen","245, 1.tv",ci2);
+            ph1 = new Phone(11223344);
+            ph2 = new Phone(22334455);
+            ph3 = new Phone(33445566);
+            
+            
             c1.addPhone(ph1);
             c1.setAddress(a1);
-            a1.setCityInfo(ci1);
+            //a1.setCityInfo(ci1);
             
             
             p1.setAddress(a1);
             p1.addHobby(h1);
+            p1.addPhone(ph4);
+            
+            p2.setAddress(a1);
+            p2.addHobby(h2);
+            p2.addPhone(ph5);
+            
+            p3.setAddress(a2);
+            p3.addHobby(h1);
+            p3.addHobby(h2);
+            p3.addHobby(h3);
+            p3.addPhone(ph6);
             
 
             //em.persist(p1);
             em.persist(c1);
+            em.persist(c2);
+            em.persist(c3);
             em.persist(a1);
             em.persist(ci1);
             em.persist(ph1);
@@ -89,45 +127,43 @@ public class CompanyFacadeTest {
     @Test
     public void testGetCompany() {
         System.out.println("getCompany");
-        int id = 1;
+        int id = c1.getId();
         
         Company expResult = c1;
         Company result = facade.getCompany(id);
         assertEquals(expResult, result);
+        
     }
 
     @Test
-    @Ignore
     public void testGetCompanies() {
         System.out.println("getCompanies");
         List<Company> expResult = null;
-        int expSize = 2;
+        int expSize = 3;
         List<Company> result = facade.getCompanies();
-        assertEquals(expResult, result);
+        assertEquals(expSize, result.size());
     }
 
     @Test
-    @Ignore
     public void testGetCompaniesFromZip() {
         System.out.println("getCompanies");
         int zipcode = 2800;
-        CompanyFacade instance = null;
         List<Company> expResult = null;
-        int expSize = 2;
+        int expSize = 1;
         List<Company> result = facade.getCompanies(zipcode);
-        assertEquals(expResult, result);
+        assertEquals(expSize, result.size());
     }
 
     @Test
-    @Ignore
     public void testGetCompanyMinEmp() {
         System.out.println("getCompanyMinEmp");
-        int employees = 0;
-        CompanyFacade instance = null;
+        int employees = 199;
         List<Company> expResult = null;
-        List<Company> result = instance.getCompanyMinEmp(employees);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        List<Company> result = facade.getCompanyMinEmp(employees);
+        assertEquals(3, result.size());
+        employees = 200;
+        result = facade.getCompanyMinEmp(employees);
+        assertEquals(1, result.size());
     }
 
 //    @Test
@@ -142,39 +178,42 @@ public class CompanyFacadeTest {
 //    }
 
     @Test
-    @Ignore
     public void testSearchCompanies() {
         System.out.println("searchCompanies");
-        String search = "";
+        String search = "re";
         CompanyFacade instance = null;
         List<Company> expResult = null;
-        List<Company> result = instance.searchCompanies(search);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        List<Company> result = facade.searchCompanies(search);
+        assertEquals(2, result.size());
     }
 
     @Test
-    @Ignore
     public void testCreateCompany() {
         System.out.println("createCompany");
-        Company company = null;
-        CompanyFacade instance = null;
-        Company expResult = null;
-        Company result = instance.createCompany(company);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        Company company = new Company("Mcd","Greasy Fastfood",12347,1350,79612265);
+        Company result = facade.createCompany(company);
+        assertEquals(company, result);
     }
 
     @Test
-    @Ignore
     public void testEditCompany() {
         System.out.println("editCompany");
-        Company company = null;
-        CompanyFacade instance = null;
-        Company expResult = null;
-        Company result = instance.editCompany(company);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        Company company = facade.getCompany(1);
+        company.setName("Mcd");
+        company.setDescription("Greasy Fastfood");
+        company.setCvr(12347);
+        company.setNumEmployees(1350);
+        Company result = facade.editCompany(company);
+        assertEquals("Mcd", result.getName());
+        assertEquals("Greasy Fastfood", result.getDescription());
+        assertEquals(12347, result.getCvr());
+        assertEquals(1350, result.getNumEmployees());
+        
+        result = facade.getCompany(1);
+        assertEquals("Mcd", result.getName());
+        assertEquals("Greasy Fastfood", result.getDescription());
+        assertEquals(12347, result.getCvr());
+        assertEquals(1350, result.getNumEmployees());
     }
 
     @Test
