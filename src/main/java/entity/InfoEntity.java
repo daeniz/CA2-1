@@ -40,6 +40,7 @@ public class InfoEntity implements Serializable {
     @OneToMany(mappedBy = "infoEntity",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<Phone> phones = new ArrayList();
     private String email;
+    
     @ManyToOne
     private Address address;
     

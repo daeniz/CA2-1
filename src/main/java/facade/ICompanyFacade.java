@@ -5,6 +5,7 @@
  */
 package facade;
 
+import entity.Address;
 import entity.Company;
 import entity.Phone;
 import java.util.List;
@@ -26,7 +27,7 @@ public interface ICompanyFacade {
 
     public List<Company> getCompanyMinEmp(int employees);
 
-    public List<Company> getCompanies(Phone phone);
+    public Company getCompany(Phone phone);
 
     public List<Company> searchCompanies(String search);
 
@@ -35,5 +36,6 @@ public interface ICompanyFacade {
     public Company editCompany(Company company);
 
     public Company deleteCompany(int id);
-
+    
+     public Company addAddress(Company co, Address address, int zipcode);
 }

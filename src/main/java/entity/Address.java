@@ -6,8 +6,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,6 +25,13 @@ public class Address implements Serializable {
 
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * @return the serialVersionUID
+     */
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -30,14 +39,24 @@ public class Address implements Serializable {
     private String additionalInfo;
     @ManyToOne
     private CityInfo cityInfo;
-    @OneToMany(mappedBy = "address")
-    private List<InfoEntity> infoEntities;
+    @OneToMany(mappedBy = "address",fetch = FetchType.EAGER)
+    private List<InfoEntity> infoEntities = new ArrayList();
     
     public Address(){
         
     }
     public Address(String street, String additionalInfo, CityInfo cityInfo){
         
+    }
+
+    public Address(String street, String additionalInfo) {
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+    }
+    
+    public void addInfoEntity(InfoEntity info){
+        this.getInfoEntities().add(info);
+        info.setAddress(this);
     }
 
     public Integer getId() {
@@ -74,11 +93,12 @@ public class Address implements Serializable {
     }
     
     
+    
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (getId() != null ? getId().hashCode() : 0);
         return hash;
     }
 
@@ -89,7 +109,7 @@ public class Address implements Serializable {
             return false;
         }
         Address other = (Address) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -97,7 +117,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Address[ id=" + id + " ]";
+        return "entity.Address[ id=" + getId() + " ]";
     }
 
     public List<InfoEntity> getInfoEntities() {
