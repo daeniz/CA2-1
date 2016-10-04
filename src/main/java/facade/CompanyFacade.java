@@ -157,10 +157,10 @@ public class CompanyFacade implements ICompanyFacade {
         CityInfo ci = null;
         try {
             ci = em.find(CityInfo.class, zipcode);
+            System.out.println(ci.getZipCode());
             address.addInfoEntity(co);
             address.setCityInfo(ci);
             em.getTransaction().begin();
-            em.merge(ci);
             em.merge(co);
             em.merge(address);
             em.getTransaction().commit();

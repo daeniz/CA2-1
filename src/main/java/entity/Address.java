@@ -39,7 +39,7 @@ public class Address implements Serializable {
     private String additionalInfo;
     @ManyToOne
     private CityInfo cityInfo;
-    @OneToMany(mappedBy = "address",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "address",fetch = FetchType.LAZY)
     private List<InfoEntity> infoEntities = new ArrayList();
     
     public Address(){

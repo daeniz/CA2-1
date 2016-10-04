@@ -88,7 +88,7 @@ public class CompanyFacadeTest {
             ph1 = new Phone(11223344);
             ph2 = new Phone(22334455);
             ph3 = new Phone(33445566);
-            
+         //   System.out.println("Get adress: " + a1.getCityInfo().getZipCode());
             
             c1.addPhone(ph1);
             c1.setAddress(a1);
@@ -118,6 +118,9 @@ public class CompanyFacadeTest {
             em.persist(ci1);
             em.persist(ph1);
             em.getTransaction().commit();
+            
+                    System.out.println(c1.getAddress().getCityInfo().getZipCode());
+
         }
         finally{
             em.close();
@@ -158,7 +161,9 @@ public class CompanyFacadeTest {
 
     @Test
     public void testGetCompanyMinEmp() {
+        
         System.out.println("getCompanyMinEmp");
+        
         int employees = 199;
         List<Company> expResult = null;
         List<Company> result = facade.getCompanyMinEmp(employees);

@@ -57,7 +57,12 @@ public class Tester {
 
         CF.deleteCompany(c4.getId());
         
-        CF.addAddress(c1, a1, 2600);
+        c1 = CF.addAddress(c1, a1, 2600);
+        System.out.println(c1.getAddress().getCityInfo());
+        
+        System.out.println("Address for c1: " + c1.getAddress().getStreet());
+       // System.out.println("Address for c1: " + c1.getAddress().getCityInfo().getCity());
+        //System.out.println("Address for c1: " + c1.getAddress().getStreet());
         
         List<Company> cs = CF.getCompanies();
         for (Company c : cs) {
@@ -70,13 +75,14 @@ public class Tester {
         }
         
          List<Company> companiesZip =  CF.getCompanies(2600);
+         
+         System.out.println("Size is: " + companiesZip.size());
          for (Company company : companiesZip) {
              System.out.println(company.getName());
         }
 
         
 
-        System.out.println(c1.getAddress().getCityInfo().getCity());
         // System.out.println(CF.getCompany(phone));
         // PF.addPerson(p1);
     }
