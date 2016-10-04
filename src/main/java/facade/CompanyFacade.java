@@ -64,7 +64,7 @@ public class CompanyFacade implements ICompanyFacade {
         List<Company> companies = null;
         try {
             CityInfo ci = em.find(CityInfo.class, zipcode);
-            Query q = em.createQuery("Select i FROM InfoEntity i WHERE i.address.cityInfo.zipCode = ?1");
+            Query q = em.createQuery("Select c FROM Company c WHERE c.address.cityInfo.zipCode = ?1");
             q.setParameter("1", zipcode);
             companies = q.getResultList();
 

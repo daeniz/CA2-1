@@ -9,6 +9,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import entity.Address;
+import entity.CityInfo;
 import entity.Company;
 import entity.Phone;
 import facade.CompanyFacade;
@@ -30,6 +33,7 @@ public class JSONConverter {
             return "";
         }
         JsonObject com = new JsonObject();
+        com.addProperty("id", company.getId());
         com.addProperty("name", company.getName());
         com.addProperty("cvr", company.getCvr());
         com.addProperty("mail", company.getEmail());
@@ -65,8 +69,8 @@ public class JSONConverter {
         com.addProperty("cvr", company.getCvr());
         com.addProperty("email", company.getEmail());
         com.addProperty("description", company.getDescription());
-        com.addProperty("numemployees", company.getNumEmployees());
-        com.addProperty("marketvalue", company.getMarketValue());
+        com.addProperty("numEmployees", company.getNumEmployees());
+        com.addProperty("marketValue", company.getMarketValue());
         if (company.getAddress() != null) {
             com.addProperty("street", company.getAddress().getStreet());
             com.addProperty("additionalinfo", company.getAddress().getAdditionalInfo());
@@ -157,6 +161,21 @@ public class JSONConverter {
             companiesJson.add(json);
         }
         return gson.toJson(companiesJson);
+    }
+    
+    public Company createCompany(String json){
+        JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
+        Company company = gson.fromJson(json, Company.class);
+        List<Phone> phones = company.getPhones();
+        if(phones!=null){
+            for (Phone phone : phones) {
+                phone.setInfoEntity(company);
+            }
+        }
+        CityInfo ci = new CityInfo(obj.get("zip").getAsInt(), obj.get("city").getAsString());
+        Address address = new Address(obj.get("street").getAsString(),obj.get("description").getAsString(),ci);
+        company.setAddress(address);
+        return company;
     }
 
 }
