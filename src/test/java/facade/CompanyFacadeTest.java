@@ -217,15 +217,17 @@ public class CompanyFacadeTest {
     }
 
     @Test
-    @Ignore
     public void testDeleteCompany() {
         System.out.println("deleteCompany");
-        int id = 0;
-        CompanyFacade instance = null;
-        Company expResult = null;
-        Company result = instance.deleteCompany(id);
+        int id = 1;
+        Company expResult = facade.getCompany(id);
+        
+        Company result = facade.deleteCompany(id);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        result = facade.getCompany(id);
+        assertTrue(result==null);
+        
+        
     }
     
 }
