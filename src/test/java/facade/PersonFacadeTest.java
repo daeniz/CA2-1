@@ -15,6 +15,7 @@ import javax.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -27,10 +28,11 @@ public class PersonFacadeTest {
     public PersonFacadeTest() {
     }
     
+    
     @Before
     public void setUp() {
     }
-
+    @Ignore
     @Test
     public void testGetPerson() {
         System.out.println("getPerson");
@@ -41,7 +43,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testGetPersons() {
         System.out.println("getPersons");
@@ -51,7 +53,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testGetPersons_int() {
         System.out.println("getPersons");
@@ -62,7 +64,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testGetPersons_Hobby() {
         System.out.println("getPersons");
@@ -73,7 +75,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testGetPerson_Phone() {
         System.out.println("getPerson");
@@ -84,7 +86,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testAddPhone() {
         System.out.println("addPhone");
@@ -96,7 +98,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testAddHobby() {
         System.out.println("addHobby");
@@ -108,7 +110,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testSearchPersons() {
         System.out.println("searchPersons");
@@ -119,7 +121,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testAddPerson() {
         System.out.println("addPerson");
@@ -130,7 +132,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testEditPerson() {
         System.out.println("editPerson");
@@ -141,7 +143,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testDeletePerson() {
         System.out.println("deletePerson");
@@ -152,7 +154,7 @@ public class PersonFacadeTest {
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
-
+    @Ignore
     @Test
     public void testGetEntityManager() {
         System.out.println("getEntityManager");
