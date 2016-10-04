@@ -5,6 +5,13 @@
  */
 package api;
 
+import entity.Company;
+import facade.CompanyFacade;
+import facade.ICompanyFacade;
+import facade.IPersonFacade;
+import facade.PersonFacade;
+import java.util.List;
+import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -14,6 +21,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * REST Web Service
@@ -25,6 +34,10 @@ public class ApiResource {
 
     @Context
     private UriInfo context;
+    private ICompanyFacade comFacade = new CompanyFacade(Persistence.createEntityManagerFactory("pu"));
+    private IPersonFacade perFacade = new PersonFacade(Persistence.createEntityManagerFactory("pu"));
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    
 
     /**
      * Creates a new instance of ApiResource
@@ -74,21 +87,21 @@ public class ApiResource {
     }
 
     @GET
-    @Path("person/complete/{phone}")
+    @Path("complete/{phone}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getPersonWithPhone(@PathParam("phone") String phone) {
         throw new UnsupportedOperationException();
     }
     
     @GET
-    @Path("person/complete/{zip}")
+    @Path("complete/{zip}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getPersonWithZip(@PathParam("zip") String phone) {
         throw new UnsupportedOperationException();
     }
     
     @GET
-    @Path("person/search/{searchstring}")
+    @Path("search/{searchstring}")
     @Produces(MediaType.APPLICATION_JSON)
     public String smartSearch(@PathParam("searchstring") String searchStr) {
         throw new UnsupportedOperationException();
@@ -101,7 +114,11 @@ public class ApiResource {
     @Path("company/complete")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllCompaniesComplete() {
-        throw new UnsupportedOperationException();
+        List<Company> companyList = comFacade.getCompanies();
+        List<String> la = null;
+        la.add("hey");
+        la.add("test");
+        return gson.toJson(la);
     }
     
     @GET

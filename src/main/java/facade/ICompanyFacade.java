@@ -8,6 +8,7 @@ package facade;
 import entity.Company;
 import entity.Phone;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -15,16 +16,18 @@ import java.util.List;
  */
 public interface ICompanyFacade {
 
+    public EntityManager getEntityManager();
+
     public Company getCompany(int id);
 
     public List<Company> getCompanies();
 
     public List<Company> getCompanies(int zipcode);
 
-    public Company getCompanyMinEmp(int employees);
+    public List<Company> getCompanyMinEmp(int employees);
 
-    public <List> Company getCompanies(Phone phone);
-    
+    public List<Company> getCompanies(Phone phone);
+
     public List<Company> searchCompanies(String search);
 
     public Company createCompany(Company company);
@@ -32,6 +35,5 @@ public interface ICompanyFacade {
     public Company editCompany(Company company);
 
     public Company deleteCompany(int id);
-    
 
 }

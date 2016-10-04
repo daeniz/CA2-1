@@ -9,12 +9,15 @@ import entity.Hobby;
 import entity.Person;
 import entity.Phone;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
  * @author dennisschmock
  */
 public interface IPersonFacade {
+    
+    public EntityManager getEntityManager();
 
     public Person getPerson(int id);
 

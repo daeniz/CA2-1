@@ -33,7 +33,12 @@ public class Address implements Serializable {
     @OneToMany(mappedBy = "address")
     private List<InfoEntity> infoEntities;
     
-    
+    public Address(){
+        
+    }
+    public Address(String street, String additionalInfo, CityInfo cityInfo){
+        
+    }
 
     public Integer getId() {
         return id;

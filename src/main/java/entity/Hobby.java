@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import javax.persistence.ManyToMany;
 public class Hobby implements Serializable {
 
     @ManyToMany(mappedBy = "hobbies")
-    private List<Person> persons;
+    private List<Person> persons = new ArrayList();
     private String name;
     private String description;
 
@@ -29,6 +30,14 @@ public class Hobby implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    public Hobby(){
+        
+    }
+    public Hobby(String name, String description){
+        this.name=name;
+        this.description=description;
+    }
 
     public Integer getId() {
         return id;
@@ -44,6 +53,16 @@ public class Hobby implements Serializable {
 
     public void setPersons(List<Person> persons) {
         this.persons = persons;
+    }
+    
+/**
+ * adds a hobby to the Person as well as adding this Person to the Hobby!
+ *
+ * @param  person the person to be added to the Person
+ */
+    public void addPerson(Person person) {
+        this.persons.add(person);
+        person.getHobbies().add(this);  //Thoughts on this approach?
     }
 
     public String getName() {
