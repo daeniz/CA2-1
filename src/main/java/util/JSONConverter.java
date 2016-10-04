@@ -6,6 +6,8 @@
 package util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import entity.Company;
 import entity.Phone;
@@ -20,10 +22,13 @@ import javax.persistence.Persistence;
  * @author dennisschmock
  */
 public class JSONConverter {
-    
-    private Gson gson = new Gson();
-    
+
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
     public String companyJson(Company company) {
+        if (company == null) {
+            return "";
+        }
         JsonObject com = new JsonObject();
         com.addProperty("name", company.getName());
         com.addProperty("cvr", company.getCvr());
@@ -31,34 +36,127 @@ public class JSONConverter {
         com.addProperty("description", company.getDescription());
         com.addProperty("numemployees", company.getNumEmployees());
         com.addProperty("marketvalue", company.getMarketValue());
-        com.addProperty("street", company.getAddress().getStreet());
-        com.addProperty("additionalinfo", company.getAddress().getAdditionalInfo());
-        com.addProperty("zip", company.getAddress().getCityInfo().getZipCode());
-        com.addProperty("city", company.getAddress().getCityInfo().getCity());
-        List<Phone> phoneList = company.getPhones();
-        List<JsonObject> phones = new ArrayList();
-        for (Phone p : phoneList) {
-            JsonObject phone = new JsonObject();
-            phone.addProperty("number", p.getNumber());
-            phone.addProperty("description", p.getDescription());
-            phones.add(phone);
+        if (company.getAddress() != null) {
+            com.addProperty("street", company.getAddress().getStreet());
+            com.addProperty("additionalinfo", company.getAddress().getAdditionalInfo());
+            com.addProperty("zip", company.getAddress().getCityInfo().getZipCode());
+            com.addProperty("city", company.getAddress().getCityInfo().getCity());
         }
-        com.addProperty("phones", gson.toJson(phones));
-        
 
+        List<Phone> phoneList = company.getPhones();
+        if (phoneList != null) {
+            JsonArray phones = new JsonArray();
+            for (Phone p : phoneList) {
+                JsonObject phone = new JsonObject();
+                phone.addProperty("number", p.getNumber());
+                phone.addProperty("description", p.getDescription());
+                phones.add(phone);
+            }
+            com.add("phones", phones);
+        }
 
-        
+        return gson.toJson(com);
+
+    }
+
+    public JsonObject companyJsonObject(Company company) {
+        JsonObject com = new JsonObject();
+        com.addProperty("name", company.getName());
+        com.addProperty("cvr", company.getCvr());
+        com.addProperty("email", company.getEmail());
+        com.addProperty("description", company.getDescription());
+        com.addProperty("numemployees", company.getNumEmployees());
+        com.addProperty("marketvalue", company.getMarketValue());
+        if (company.getAddress() != null) {
+            com.addProperty("street", company.getAddress().getStreet());
+            com.addProperty("additionalinfo", company.getAddress().getAdditionalInfo());
+            com.addProperty("zip", company.getAddress().getCityInfo().getZipCode());
+            com.addProperty("city", company.getAddress().getCityInfo().getCity());
+        }
+
+        List<Phone> phoneList = company.getPhones();
+        if (phoneList != null) {
+            JsonArray phones = new JsonArray();
+            for (Phone p : phoneList) {
+                JsonObject phone = new JsonObject();
+                phone.addProperty("number", p.getNumber());
+                phone.addProperty("description", p.getDescription());
+                phones.add(phone);
+            }
+            com.add("phones", phones);
+
+        }
+
+        return com;
+    }
+
+    public String companiesJson(List<Company> companies) {
+        if (companies == null) {
+            return "";
+        }
+        JsonArray companiesJson = new JsonArray();
+        for (Company company : companies) {
+            JsonObject json = companyJsonObject(company);
+            companiesJson.add(json);
+        }
+        return gson.toJson(companiesJson);
+
+    }
+
+    ;
+
+    public String companyContactInfo(Company company) {
+        if(company==null)return"";
+        JsonObject com = new JsonObject();
+        com.addProperty("name", company.getName());
+        com.addProperty("email", company.getEmail());
+
+        List<Phone> phoneList = company.getPhones();
+        if (phoneList != null) {
+            JsonArray phones = new JsonArray();
+            for (Phone p : phoneList) {
+                JsonObject phone = new JsonObject();
+                phone.addProperty("number", p.getNumber());
+                phone.addProperty("description", p.getDescription());
+                phones.add(phone);
+            }
+            com.add("phones", phones);
+
+        }
         return gson.toJson(com);
     }
     
-    public String companiesJson(List<Company> companies){
-        List<String> companiesJson = new ArrayList();
-        for (Company company : companies) {
-            companiesJson.add(this.companyJson(company));
+     public JsonObject companyContactInfoJson(Company company) {
+        JsonObject com = new JsonObject();
+          if(company==null)return com;
+        com.addProperty("name", company.getName());
+        com.addProperty("email", company.getEmail());
+
+        List<Phone> phoneList = company.getPhones();
+        if (phoneList != null) {
+            JsonArray phones = new JsonArray();
+            for (Phone p : phoneList) {
+                JsonObject phone = new JsonObject();
+                phone.addProperty("number", p.getNumber());
+                phone.addProperty("description", p.getDescription());
+                phones.add(phone);
+            }
+            com.add("phones", phones);
+
         }
-        return companiesJson(companies);
-        
-    
-    };
-    
+        return com;
+    }
+
+    public String companiesContactInfo(List<Company> companies) {
+        if (companies == null) {
+            return "";
+        }
+        JsonArray companiesJson = new JsonArray();
+        for (Company company : companies) {
+            JsonObject json = companyContactInfoJson(company);
+            companiesJson.add(json);
+        }
+        return gson.toJson(companiesJson);
+    }
+
 }

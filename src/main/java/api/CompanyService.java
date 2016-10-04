@@ -18,12 +18,14 @@ import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import util.JSONConverter;
 
 /**
  * REST Web Service
@@ -38,6 +40,7 @@ public class CompanyService {
     private ICompanyFacade comFacade = new CompanyFacade(Persistence.createEntityManagerFactory("PU"));
     private IPersonFacade perFacade = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private JSONConverter jsc = new JSONConverter();
 
     /**
      * Creates a new instance of CompanyService
@@ -48,18 +51,49 @@ public class CompanyService {
     @GET
     @Path("complete")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAllCompaniesComplete() {
-        List<Company> companies = new ArrayList();
+    public String getAllCompanies() {
+        List<Company> companies;
         companies = comFacade.getCompanies();
-        return gson.toJson(companies);
+        return jsc.companiesJson(companies);
     }
-    
+
     @GET
     @Path("complete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAllCompanyComplete(@PathParam("id")String id) {
-        List<Company> companies = new ArrayList();
-       companies = comFacade.getCompanies();
-        return gson.toJson("ddd");
+    public String getCompanyComplete(@PathParam("id") int id) {
+        Company com = comFacade.getCompany(id);
+
+        return jsc.companyJson(com);
     }
+
+    @GET
+    @Path("contactinfo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCompaniesContactInfo() {
+        return jsc.companiesContactInfo(comFacade.getCompanies());
+    }
+    
+    
+    @GET
+    @Path("contactinfo/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCompaniesContactInfo(@PathParam("id")int id) {
+        return jsc.companyContactInfo(comFacade.getCompany(id));
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String createCompany() {
+        return "";
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String deleteCompany(@PathParam("id") int id) {
+        return jsc.companyJson(comFacade.deleteCompany(id));
+    }
+
 }

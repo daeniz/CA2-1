@@ -39,8 +39,18 @@ public class Tester {
         Company c4 = new Company("3My company", "Nice", 1111, 1111, 1111);
 
         Address a1 = new Address("Nørgade", "Somewhere nice");
+        Address a2 = new Address("Nørgade", "Somewhere nice");
+        Address a3 = new Address("Nørgade", "Somewhere nice");
+        Address a4 = new Address("Nørgade", "Somewhere nice");
         Phone phone = new Phone(11554455, "Home");
+        Phone phone2 = new Phone(11554455, "Home");
+        Phone phone3 = new Phone(11554455, "Home");
+        Phone phone4 = new Phone(11554455, "Home");
         c1.addPhone(phone);
+        c2.addPhone(phone2);
+        c3.addPhone(phone3);
+        c4.addPhone(phone4);
+        
 
         CF.createCompany(c1);
         CF.createCompany(c2);
@@ -54,6 +64,9 @@ public class Tester {
 
 
         c1 = CF.addAddress(c1, a1, 2600);
+        c2 = CF.addAddress(c2, a2, 2600);
+        c3 = CF.addAddress(c3, a3, 2600);
+        c4 = CF.addAddress(c4, a4, 2600);
         
         System.out.println("LIST COMPANIES");
         List<Company> cs = CF.getCompanies();
@@ -78,7 +91,6 @@ public class Tester {
         Person p2 = new Person("1Dennis", "Schmock");
         Person p3 = new Person("2Dennis", "Schmock");
         Person p4 = new Person("3Dennis", "Schmock");
-        Address a2 = new Address("Nørgade", "Somewhere nice");
         Phone phone1 = new Phone(11554455, "Home");
         Hobby hobby = new Hobby("Golf", "Boring sport with big clubs and small balls.");
         
@@ -93,13 +105,10 @@ public class Tester {
         PF.addPerson(p4);
         
         PF.addAddress(p1, a2, 2600);
-        List<Phone> phones =  c1.getPhones();
-        for (Phone phone2 : phones) {
-            System.out.println(phone2.getNumber());
-        }
+      
         
         System.out.println(jc.companyJson(c1));
-        System.out.println(cs);
+        System.out.println(jc.companiesJson(CF.getCompanies()));
         
         
 
