@@ -17,6 +17,7 @@ import facade.PersonFacade;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import util.JSONConverter;
 
 /**
  *
@@ -27,6 +28,7 @@ public class Tester {
     private static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("PU");
     private static final IPersonFacade PF = new PersonFacade(EMF);
     private static final ICompanyFacade CF = new CompanyFacade(EMF);
+    private static JSONConverter jc = new JSONConverter();
 
     public static void main(String[] args) {
         Persistence.generateSchema("PU", null);
@@ -49,20 +51,14 @@ public class Tester {
         phone.setInfoEntity(c1);
 
         CF.editCompany(c1);
-        System.out.println(phone.getId());
 
-        CF.deleteCompany(c4.getId());
 
         c1 = CF.addAddress(c1, a1, 2600);
-        System.out.println(c1.getAddress().getCityInfo());
-
-        System.out.println("Address for c1: " + c1.getAddress().getStreet());
-        // System.out.println("Address for c1: " + c1.getAddress().getCityInfo().getCity());
-        //System.out.println("Address for c1: " + c1.getAddress().getStreet());
-
+        
+        System.out.println("LIST COMPANIES");
         List<Company> cs = CF.getCompanies();
         for (Company c : cs) {
-            System.out.println(c.getName());
+            System.out.println(c);
         }
 
         List<Company> companies = CF.getCompanyMinEmp(1200);
@@ -97,6 +93,15 @@ public class Tester {
         PF.addPerson(p4);
         
         PF.addAddress(p1, a2, 2600);
+        List<Phone> phones =  c1.getPhones();
+        for (Phone phone2 : phones) {
+            System.out.println(phone2.getNumber());
+        }
+        
+        System.out.println(jc.companyJson(c1));
+        System.out.println(cs);
+        
+        
 
     }
 }

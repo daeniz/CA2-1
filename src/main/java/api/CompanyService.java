@@ -50,7 +50,7 @@ public class CompanyService {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllCompaniesComplete() {
         List<Company> companies = new ArrayList();
-       companies = comFacade.getCompanies();
+        companies = comFacade.getCompanies();
         return gson.toJson(companies);
     }
     
