@@ -106,6 +106,7 @@ public class CompanyService {
         Company com = jsc.createCompany(json);
         return jsc.companyJson(comFacade.editCompany(com));
     }
+    
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")

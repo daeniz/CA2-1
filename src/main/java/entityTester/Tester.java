@@ -110,6 +110,8 @@ public class Tester {
         System.out.println(jc.companyJson(c1));
         System.out.println(jc.companiesJson(CF.getCompanies()));
         
+        System.out.println(CF.searchCompanies("11"));
+        
         
 
     }

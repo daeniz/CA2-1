@@ -14,6 +14,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  *
@@ -95,8 +96,8 @@ public class CompanyFacade implements ICompanyFacade {
         EntityManager em = this.getEntityManager();
         Company company = null;
         try {
-            Query q = em.createQuery("Select p FROM InfoEntity p WHERE p.phones = ?1");
-            q.setParameter(1, phone);
+            Query q = em.createQuery("Select c FROM Company c WHERE c.phones = ?1");
+            q.setParameter("1", phone);
 
             company = (Company) q.getSingleResult();
         } finally {
@@ -174,7 +175,20 @@ public class CompanyFacade implements ICompanyFacade {
 
     @Override
     public List<Company> searchCompanies(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        search += "%" + search + "%";
+        EntityManager em = this.getEntityManager();
+        List<Company> companies = new ArrayList();
+        try{
+            Query q = em.createQuery("SELECT c FROM InfoEntity c WHERE c.phones.number = ?1");
+            q.setParameter("1", search);
+            companies = q.getResultList();
+            
+        }finally {
+            em.close();
+        }
+        
+        return companies;
+        
     }
 
 }

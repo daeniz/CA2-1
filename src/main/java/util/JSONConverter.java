@@ -52,6 +52,7 @@ public class JSONConverter {
             JsonArray phones = new JsonArray();
             for (Phone p : phoneList) {
                 JsonObject phone = new JsonObject();
+                phone.addProperty("id", p.getId());
                 phone.addProperty("number", p.getNumber());
                 phone.addProperty("description", p.getDescription());
                 phones.add(phone);
@@ -65,6 +66,7 @@ public class JSONConverter {
 
     public JsonObject companyJsonObject(Company company) {
         JsonObject com = new JsonObject();
+        com.addProperty("id", company.getId());
         com.addProperty("name", company.getName());
         com.addProperty("cvr", company.getCvr());
         com.addProperty("email", company.getEmail());
@@ -83,6 +85,7 @@ public class JSONConverter {
             JsonArray phones = new JsonArray();
             for (Phone p : phoneList) {
                 JsonObject phone = new JsonObject();
+                phone.addProperty("id", p.getId());
                 phone.addProperty("number", p.getNumber());
                 phone.addProperty("description", p.getDescription());
                 phones.add(phone);
@@ -110,7 +113,9 @@ public class JSONConverter {
     ;
 
     public String companyContactInfo(Company company) {
-        if(company==null)return"";
+        if (company == null) {
+            return "";
+        }
         JsonObject com = new JsonObject();
         com.addProperty("name", company.getName());
         com.addProperty("email", company.getEmail());
@@ -120,6 +125,7 @@ public class JSONConverter {
             JsonArray phones = new JsonArray();
             for (Phone p : phoneList) {
                 JsonObject phone = new JsonObject();
+                phone.addProperty("id", p.getId());
                 phone.addProperty("number", p.getNumber());
                 phone.addProperty("description", p.getDescription());
                 phones.add(phone);
@@ -129,10 +135,12 @@ public class JSONConverter {
         }
         return gson.toJson(com);
     }
-    
-     public JsonObject companyContactInfoJson(Company company) {
+
+    public JsonObject companyContactInfoJson(Company company) {
         JsonObject com = new JsonObject();
-          if(company==null)return com;
+        if (company == null) {
+            return com;
+        }
         com.addProperty("name", company.getName());
         com.addProperty("email", company.getEmail());
 
@@ -141,6 +149,7 @@ public class JSONConverter {
             JsonArray phones = new JsonArray();
             for (Phone p : phoneList) {
                 JsonObject phone = new JsonObject();
+                phone.addProperty("id", p.getId());
                 phone.addProperty("number", p.getNumber());
                 phone.addProperty("description", p.getDescription());
                 phones.add(phone);
@@ -162,18 +171,18 @@ public class JSONConverter {
         }
         return gson.toJson(companiesJson);
     }
-    
-    public Company createCompany(String json){
+
+    public Company createCompany(String json) {
         JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
         Company company = gson.fromJson(json, Company.class);
         List<Phone> phones = company.getPhones();
-        if(phones!=null){
+        if (phones != null) {
             for (Phone phone : phones) {
                 phone.setInfoEntity(company);
             }
         }
         CityInfo ci = new CityInfo(obj.get("zip").getAsInt(), obj.get("city").getAsString());
-        Address address = new Address(obj.get("street").getAsString(),obj.get("description").getAsString(),ci);
+        Address address = new Address(obj.get("street").getAsString(), obj.get("description").getAsString(), ci);
         company.setAddress(address);
         return company;
     }
