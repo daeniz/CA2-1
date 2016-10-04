@@ -94,12 +94,35 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public Person addPhone(Phone phone, Person p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        p.addPhone(phone);
+        phone.setInfoEntity(p);
+        EntityManager em = this.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(p);
+            em.merge(phone);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return p;
+
     }
 
     @Override
     public Person addHobby(Hobby h, Person p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        p.addHobby(h);
+        h.addPerson(p);
+        try {
+            em.getTransaction().begin();
+            em.merge(p);
+            em.merge(h);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return p;
     }
 
     @Override
@@ -109,17 +132,46 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public Person addPerson(Person person) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return person;
     }
 
     @Override
     public Person editPerson(Person person) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.merge(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return person;
     }
 
     @Override
     public Person deletePerson(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        Person person = null;
+
+        try {
+           person = em.find(Person.class, id);
+            em.getTransaction().begin();
+            em.remove(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return person;
     }
 
     @Override
