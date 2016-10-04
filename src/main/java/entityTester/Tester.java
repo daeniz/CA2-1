@@ -32,6 +32,16 @@ public class Tester {
 
     public static void main(String[] args) {
         Persistence.generateSchema("PU", null);
+        PersonFacade pf = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
+        List<Person> persons = pf.getPersons();
+        for (Person person : persons) {
+            System.out.println(person.getFirstName() + " "+ person.getLastName());
+            List<Hobby> hobbies = person.getHobbies();
+            for (Hobby hobby : hobbies) {
+                System.out.println(hobby.getName());
+            }
+            System.out.println("");
+        }
 
 //        Company c1 = new Company("My company", "Nice", 1111, 1111, 1111);
 //        Company c2 = new Company("1My company", "Nice", 1111, 1111, 1111);
