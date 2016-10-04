@@ -36,11 +36,18 @@ public class Tester {
         System.out.println("cityinfo size: "+ci.size());
         
         try {
-            Query q = em.createQuery("SELECT c FROM Person AS c");
+            Query q = em.createQuery("SELECT c FROM Hobby AS c");
             persons = q.getResultList();
         } finally {
             em.close();
         }
         System.out.println("persons length after query: "+persons.size());
+        
+        
+        
+        List<Person> persons1 = facade.getPersons(100);
+        System.out.println("persons1: "+persons1.size());
+        
+        
     }
 }

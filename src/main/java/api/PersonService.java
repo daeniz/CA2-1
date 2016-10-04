@@ -50,50 +50,54 @@ public class PersonService {
 
     @GET
     @Path("complete")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsComplete() {
         List<Person> persons = perFacade.getPersons();
         return perConv.personToJson(persons);
     }
 
+    //I create a single person list, so that I can use the same method in the converter 
     @GET
     @Path("complete/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonCompleteWithID(@PathParam("id") int id) {
-        throw new UnsupportedOperationException();
+        Person person = perFacade.getPerson(id);
+        List<Person> personList = null;
+        personList.add(person);
+        return perConv.personToJson(personList);
+        
     }
 //    
 
     @GET
     @Path("contactinfo")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsContactinfo() {
-        throw new UnsupportedOperationException();
+        List<Person> persons = perFacade.getPersons();
+        return perConv.personContactinfoToJson(persons);
     }
 //    
 //    
-
+    
+    //I create a single person list, so that I can use the same method in the converter
     @GET
     @Path("contactinfo/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonContactinfoWithID(@PathParam("id") int id) {
-        throw new UnsupportedOperationException();
+        List<Person> persons = null;
+        Person person = perFacade.getPerson(id);
+        persons.add(person);
+        return perConv.personContactinfoToJson(persons);
     }
 //    
 
     @GET
     @Path("{hobby}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsWithHobby(@PathParam("hobby") String hobby) {
         return gson.toJson("sadff");
     }
-//
-//    @Path("complete/{id}")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getPersonWithPhone(@PathParam("phone") String phone) {
-//        return gson.toJson("hey");
-//    }
+
 //    
 //    @GET
 //    @Path("complete/{zip}")

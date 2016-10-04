@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import entity.Hobby;
 import entity.Person;
+import entity.Phone;
 import java.util.List;
 
 /**
@@ -28,7 +29,6 @@ public class PersonConverter {
             jo.addProperty("firstName", p.getFirstName());
             jo.addProperty("lastName", p.getLastName());
             jo.addProperty("email", p.getEmail());
-            jo.addProperty("street", p.getAddress().getStreet());
             
             //adding address properties
             JsonObject address = new JsonObject();
@@ -45,9 +45,35 @@ public class PersonConverter {
                 hobbyobj.addProperty("description", hobby.getDescription());
                 hobbyArray.add(hobbyobj);
             }
-            jArray.add(hobbyArray);
+            jo.add("hobbies", hobbyArray);
             
             jArray.add(jo);
+        }
+        return gson.toJson(jArray);
+    }
+
+    public String personContactinfoToJson(List<Person> persons) {
+        JsonArray jArray = new JsonArray();
+        for (Person person : persons){
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("firstName", person.getFirstName());
+            jsonObject.addProperty("lastName", person.getLastName());
+            jsonObject.addProperty("email", person.getEmail());
+            jsonObject.addProperty("street", person.getAddress().getStreet());
+            jsonObject.addProperty("additionalinfo", person.getAddress().getAdditionalInfo());
+            jsonObject.addProperty("city", person.getAddress().getCityInfo().getCity());
+            jsonObject.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
+            
+            JsonArray phones = new JsonArray();
+            for (Phone phone : person.getPhones()) {
+                JsonObject jsonObjectPhone = new JsonObject();
+                jsonObjectPhone.addProperty("description", phone.getDescription());
+                jsonObjectPhone.addProperty("phoneNumber", phone.getNumber());
+                phones.add(jsonObjectPhone);
+            }
+            jsonObject.add("phones", phones);
+            
+            jArray.add(jsonObject);
         }
         return gson.toJson(jArray);
     }
