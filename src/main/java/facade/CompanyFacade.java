@@ -11,10 +11,13 @@ import entity.Company;
 import entity.Phone;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -171,24 +174,27 @@ public class CompanyFacade implements ICompanyFacade {
 
         }
         return co;
-    };
+    }
+
+    ;
 
     @Override
     public List<Company> searchCompanies(String search) {
         search += "%" + search + "%";
         EntityManager em = this.getEntityManager();
         List<Company> companies = new ArrayList();
-        try{
-            Query q = em.createQuery("SELECT c FROM InfoEntity c WHERE c.phones.number = ?1");
-            q.setParameter("1", search);
-            companies = q.getResultList();
-            
-        }finally {
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Company> q = cb.createQuery(Company.class);
+
+            Root<Company> c = q.from(Company.class);
+
+        } finally {
             em.close();
         }
-        
+
         return companies;
-        
+
     }
 
 }

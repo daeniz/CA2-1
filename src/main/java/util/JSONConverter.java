@@ -181,9 +181,15 @@ public class JSONConverter {
                 phone.setInfoEntity(company);
             }
         }
-        CityInfo ci = new CityInfo(obj.get("zip").getAsInt(), obj.get("city").getAsString());
-        Address address = new Address(obj.get("street").getAsString(), obj.get("description").getAsString(), ci);
-        company.setAddress(address);
+        CityInfo ci = null;
+        if (obj.get("zip") != null && obj.get("city") != null) {
+            ci = new CityInfo(obj.get("zip").getAsInt(), obj.get("city").getAsString());
+        }
+        if (obj.get("street") != null) {
+            Address address = new Address(obj.get("street").getAsString(), obj.get("description").getAsString(), ci);
+            company.setAddress(address);
+        }
+        
         return company;
     }
 

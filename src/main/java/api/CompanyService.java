@@ -51,6 +51,13 @@ public class CompanyService {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
+    public String getDefaultResponse() {
+
+        return gson.toJson("defaultResponse");
+    }
+
+    @GET
     @Path("complete")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllCompanies() {
@@ -98,15 +105,15 @@ public class CompanyService {
         Company com = jsc.createCompany(json);
         return jsc.companyJson(comFacade.createCompany(com));
     }
-    
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String editCompany(String json){
+    public String editCompany(String json) {
         Company com = jsc.createCompany(json);
         return jsc.companyJson(comFacade.editCompany(com));
     }
-    
+
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
