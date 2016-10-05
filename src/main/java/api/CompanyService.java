@@ -19,8 +19,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
@@ -49,8 +51,15 @@ public class CompanyService {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
+    public String getDefaultResponse() {
+
+        return gson.toJson("defaultResponse");
+    }
+
+    @GET
     @Path("complete")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllCompanies() {
         List<Company> companies;
         companies = comFacade.getCompanies();
@@ -59,7 +68,7 @@ public class CompanyService {
 
     @GET
     @Path("complete/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getCompanyComplete(@PathParam("id") int id) {
         Company com = comFacade.getCompany(id);
 
@@ -68,29 +77,46 @@ public class CompanyService {
 
     @GET
     @Path("contactinfo")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getCompaniesContactInfo() {
         return jsc.companiesContactInfo(comFacade.getCompanies());
     }
-    
-    
+
     @GET
     @Path("contactinfo/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getCompaniesContactInfo(@PathParam("id")int id) {
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
+    public String getCompaniesContactInfo(@PathParam("id") int id) {
         return jsc.companyContactInfo(comFacade.getCompany(id));
     }
 
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("complete/zip/{zip}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
+    public String getCompaniesInACity(@PathParam("zip") int zip) {
+        List<Company> companies;
+        companies = comFacade.getCompanies(zip);
+        return jsc.companiesJson(companies);
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String createCompany() {
-        return "";
+    public String createCompany(String json) {
+        Company com = jsc.createCompany(json);
+        return jsc.companyJson(comFacade.createCompany(com));
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String editCompany(String json) {
+        Company com = jsc.createCompany(json);
+        return jsc.companyJson(comFacade.editCompany(com));
     }
 
     @DELETE
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     @Consumes(MediaType.APPLICATION_JSON)
     public String deleteCompany(@PathParam("id") int id) {
         return jsc.companyJson(comFacade.deleteCompany(id));

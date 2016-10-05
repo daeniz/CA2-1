@@ -11,9 +11,13 @@ import entity.Company;
 import entity.Phone;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -64,7 +68,7 @@ public class CompanyFacade implements ICompanyFacade {
         List<Company> companies = null;
         try {
             CityInfo ci = em.find(CityInfo.class, zipcode);
-            Query q = em.createQuery("Select i FROM InfoEntity i WHERE i.address.cityInfo.zipCode = ?1");
+            Query q = em.createQuery("Select c FROM Company c WHERE c.address.cityInfo.zipCode = ?1");
             q.setParameter("1", zipcode);
             companies = q.getResultList();
 
@@ -95,8 +99,8 @@ public class CompanyFacade implements ICompanyFacade {
         EntityManager em = this.getEntityManager();
         Company company = null;
         try {
-            Query q = em.createQuery("Select p FROM InfoEntity p WHERE p.phones = ?1");
-            q.setParameter(1, phone);
+            Query q = em.createQuery("Select c FROM Company c WHERE c.phones = ?1");
+            q.setParameter("1", phone);
 
             company = (Company) q.getSingleResult();
         } finally {
@@ -170,11 +174,27 @@ public class CompanyFacade implements ICompanyFacade {
 
         }
         return co;
-    };
+    }
+
+    ;
 
     @Override
     public List<Company> searchCompanies(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        search += "%" + search + "%";
+        EntityManager em = this.getEntityManager();
+        List<Company> companies = new ArrayList();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Company> q = cb.createQuery(Company.class);
+
+            Root<Company> c = q.from(Company.class);
+
+        } finally {
+            em.close();
+        }
+
+        return companies;
+
     }
 
 }

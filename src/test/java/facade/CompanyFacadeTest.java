@@ -12,6 +12,8 @@ import entity.Hobby;
 import entity.Person;
 import entity.Phone;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -138,7 +140,7 @@ public class CompanyFacadeTest {
         
         Company expResult = c1;
         Company result = facade.getCompany(id);
-        assertEquals(expResult, result);
+        assertEquals(expResult.getName(), result.getName());
         
     }
 
@@ -228,12 +230,13 @@ public class CompanyFacadeTest {
 
     @Test
     public void testDeleteCompany() {
+       
         System.out.println("deleteCompany");
         int id = c2.getId();
         Company expResult = facade.getCompany(id);
         
         Company result = facade.deleteCompany(id);
-        assertEquals(expResult, result);
+        assertEquals(expResult.getName(), result.getName());
         result = facade.getCompany(id);
         assertTrue(result==null);
         
