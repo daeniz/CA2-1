@@ -25,20 +25,18 @@ import javax.persistence.Persistence;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.Ignore;
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.MatcherAssert.assertThat;
 /**
  *
  * @author edipetres
  */
-public class PersonServiceIT {
+public class PersonServiceTest {
     
     int personID;
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
     IPersonFacade pf = new PersonFacade(emf);
     Person person;
 
-    public PersonServiceIT() {
+    public PersonServiceTest() {
     }
 
         @BeforeClass

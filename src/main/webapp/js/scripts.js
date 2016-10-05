@@ -10,7 +10,7 @@ $(function () {
     $("#listcompanies").click(function () {
         event.preventDefault();
        
-        renderCompaniesList();
+        renderList();
     });
     $("#countrylist").on("click", "a.cities", function () {
         event.preventDefault();
@@ -20,9 +20,8 @@ $(function () {
         window.console.log(id);
         renderCityList(id);
     });
-    
     //For rendering the Companylist
-    function renderCompaniesList() {
+    function renderList() {
         $.ajax({
             type: 'GET',
             url: "api/company/complete",
@@ -59,8 +58,7 @@ $(function () {
             }
         });
     }
-    
-    //
+
     $("#search").keyup(function (e) {
         event.preventDefault();
 
