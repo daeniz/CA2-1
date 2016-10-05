@@ -78,9 +78,16 @@ buildNumber.properties
 hs_err_pid*
 
 
-src/main/resources/META-INF/persistence.xml
+
+
+src/main/resources/META-INF/
 persistence.xml
-/nbproject/
+
 
 #Derby db
+derby.log
 /memory/
+
+src/main/java/api/ApplicationConfig.java
+
+nb-configuration.xml

@@ -180,15 +180,19 @@ public class CompanyFacade implements ICompanyFacade {
 
     @Override
     public List<Company> searchCompanies(String search) {
+        String sql = "SELECT distinct * from INFOENTITY left join CA2.COMPANY "
+                + "on INFOENTITY.ID = COMPANY.ID right join phone "
+                + "on INFOENTITY.ID = phone.INFOENTITY_ID right join ADDRESS "
+                + "on INFOENTITY.ADDRESS_ID = ADDRESS.ID"
+                + "where cast(phone.NUMBER as char) like '11%' "
+                + "or COMPANY.NAME like '%s%' "
+                + "or cast(COMPANY.CVR as char) like '1%'; ";
+        
         search += "%" + search + "%";
         EntityManager em = this.getEntityManager();
         List<Company> companies = new ArrayList();
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Company> q = cb.createQuery(Company.class);
-
-            Root<Company> c = q.from(Company.class);
-
+            Query q = em.createNativeQuery(sql, Company.class);
         } finally {
             em.close();
         }
