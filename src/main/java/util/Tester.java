@@ -20,34 +20,15 @@ import javax.persistence.Query;
  * @author edipetres
  */
 public class Tester {
+
     public static void main(String[] args) {
-        Persistence.generateSchema("PU", null);
-        IPersonFacade facade = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
-        List<Person> persons = new ArrayList();
-        System.out.println("persons length "+persons.size());
-        EntityManager em = Persistence.createEntityManagerFactory("PU").createEntityManager();
-        List<CityInfo> ci = new ArrayList();
-        try {
-            Query q = em.createQuery("SELECT c From CityInfo AS c");
-            ci = q.getResultList();
-        } finally {
-            
+        SmartSearch ss = new SmartSearch();
+        List<Person> persons = ss.search("80489716");
+        if (persons != null) {
+            for (Person p : persons) {
+                System.out.println("" + p.getFirstName() + " " + p.getLastName());
+            }
         }
-        System.out.println("cityinfo size: "+ci.size());
-        
-        try {
-            Query q = em.createQuery("SELECT c FROM Hobby AS c");
-            persons = q.getResultList();
-        } finally {
-            em.close();
-        }
-        System.out.println("persons length after query: "+persons.size());
-        
-        
-        
-        List<Person> persons1 = facade.getPersons(100);
-        System.out.println("persons1: "+persons1.size());
-        
-        
+
     }
 }

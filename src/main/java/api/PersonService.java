@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.Company;
 import entity.Person;
+import entity.Phone;
 import facade.CompanyFacade;
 import facade.ICompanyFacade;
 import facade.IPersonFacade;
@@ -26,6 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import util.PersonConverter;
+import util.SmartSearch;
 
 /**
  * REST Web Service
@@ -41,6 +43,7 @@ public class PersonService {
     private IPersonFacade perFacade = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private PersonConverter perConv = new PersonConverter();
+    private SmartSearch ss = new SmartSearch();
 
     /**
      * Creates a new instance of PersonService
@@ -89,7 +92,7 @@ public class PersonService {
     @Path("{hobby}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsWithHobby(@PathParam("hobby") String hobby) {
-        return gson.toJson("sadff");
+        throw new UnsupportedOperationException();
     }
 
     
@@ -106,16 +109,18 @@ public class PersonService {
     @Path("complete/phone/{phone}")
     @Produces(MediaType.APPLICATION_JSON+ ";charset=Cp1252")
     public String getPersonWithPhone(@PathParam("phone") String phone) {
-        int phoneNo = Integer.parseInt(phone);
-        return perConv.personToJson(perFacade.getPerson(phoneNo));
+        throw new UnsupportedOperationException();
+//        int phoneNo = Integer.parseInt(phone);
+//        return perConv.personToJson(perFacade.getPerson(new Phone(phoneNo)));
     }
     
-//    
-//    @GET
-//    @Path("search/{searchstring}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String smartSearch(@PathParam("searchstring") String searchStr) {
-//        throw new UnsupportedOperationException();
-//    }
+    
+    @GET
+    @Path("search/{searchstring}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String smartSearch(@PathParam("searchstring") String searchStr) {
+        List<Person> persons = ss.search(searchStr);
+        return perConv.personsToJson(persons);
+    }
 
 }
