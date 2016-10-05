@@ -6,12 +6,10 @@
 
 
 $(function () {
-    renderList();
     $("#citytable").hide();
-    $("#listcountries").click(function () {
+    $("#listcompanies").click(function () {
         event.preventDefault();
-        $("#countrytable").show();
-        $("#citytable").hide();
+       
         renderList();
     });
     $("#countrylist").on("click", "a.cities", function () {
@@ -22,20 +20,22 @@ $(function () {
         window.console.log(id);
         renderCityList(id);
     });
-    //For rendering the personlist
+    //For rendering the Companylist
     function renderList() {
         $.ajax({
             type: 'GET',
-            url: "api/country",
+            url: "api/company/complete",
             dataType: "json", // data type of response
             success: function (data) {
                 var list = data == null ? [] : (data instanceof Array ? data : [data]);
-                $('#countrylist').text("");
-                $.each(list, function (index, country) {
-                    $('#countrylist').append("<tr><td>" + country.code + "</td><td>" + country.name
-                            + "</td><td> " + country.continent + "</td><td>"
-                            + country.capital + "</td><td>"
-                            + "<a href='#' class='cities' data-city='" + country.code + "'>List cities </a></td></tr>"
+                //Add table header
+                $('#content').html("<table class='table'><thead><tr><th>1</th>" + 
+                        " <th>2</th><th>3</th><th>4</th>");
+                //Go through the list
+                $.each(list, function (index, company) {
+                    $('#content').append("<tr><td>" + company.name + "</td><td>" + company.description
+                            + "</td><td> " + company.street + "</td><td>"
+                            + company.cvr + "</td><td>"
                             );
                 });
             }

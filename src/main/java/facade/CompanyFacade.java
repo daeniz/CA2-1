@@ -184,11 +184,8 @@ public class CompanyFacade implements ICompanyFacade {
         EntityManager em = this.getEntityManager();
         List<Company> companies = new ArrayList();
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Company> q = cb.createQuery(Company.class);
-
-            Root<Company> c = q.from(Company.class);
-
+            Query q = em.createQuery("SELECT c FROM Company c INNER JOIN Phone p WHERE TRIM (p.number) LIKE ?1", Company.class);
+            q.setParameter(1, search);
         } finally {
             em.close();
         }
