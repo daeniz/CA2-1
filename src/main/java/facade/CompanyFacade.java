@@ -187,11 +187,12 @@ public class CompanyFacade implements ICompanyFacade {
                 + "where cast(phone.NUMBER as char) like '11%' "
                 + "or COMPANY.NAME like '%s%' "
                 + "or cast(COMPANY.CVR as char) like '1%'; ";
+        
         search += "%" + search + "%";
         EntityManager em = this.getEntityManager();
         List<Company> companies = new ArrayList();
         try {
-            Query q = em.createNativeQuery(search, resultClass)
+            Query q = em.createNativeQuery(sql, Company.class);
         } finally {
             em.close();
         }
