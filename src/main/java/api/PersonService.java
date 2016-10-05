@@ -53,7 +53,7 @@ public class PersonService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsComplete() {
         List<Person> persons = perFacade.getPersons();
-        return perConv.personToJson(persons);
+        return perConv.personsToJson(persons);
     }
 
     //I create a single person list, so that I can use the same method in the converter 
@@ -61,10 +61,7 @@ public class PersonService {
     @Path("complete/{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonCompleteWithID(@PathParam("id") int id) {
-        Person person = perFacade.getPerson(id);
-        List<Person> personList = null;
-        personList.add(person);
-        return perConv.personToJson(personList);
+        return perConv.personToJson(perFacade.getPerson(id));
         
     }
 //    
@@ -74,20 +71,16 @@ public class PersonService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsContactinfo() {
         List<Person> persons = perFacade.getPersons();
-        return perConv.personContactinfoToJson(persons);
+        return perConv.personsContactinfoToJson(persons);
     }
-//    
-//    
+//  
     
-    //I create a single person list, so that I can use the same method in the converter
     @GET
     @Path("contactinfo/{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonContactinfoWithID(@PathParam("id") int id) {
-        List<Person> persons = null;
-        Person person = perFacade.getPerson(id);
-        persons.add(person);
-        return perConv.personContactinfoToJson(persons);
+        
+        return perConv.personContactinfoToJson(perFacade.getPerson(id));
     }
 //    
 
@@ -98,13 +91,24 @@ public class PersonService {
         return gson.toJson("sadff");
     }
 
-//    
-//    @GET
-//    @Path("complete/{zip}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getPersonWithZip(@PathParam("zip") String zip) {
-//        throw new UnsupportedOperationException();
-//    }
+    
+    @GET
+    @Path("complete/zip/{zip}")
+    @Produces(MediaType.APPLICATION_JSON+ ";charset=Cp1252")
+    public String getPersonWithZip(@PathParam("zip") String zip) {
+        int zipCode = Integer.parseInt(zip);
+        List<Person> persons = perFacade.getPersons(zipCode);
+        return perConv.personsToJson(persons);
+    }
+    
+    @GET
+    @Path("complete/phone/{phone}")
+    @Produces(MediaType.APPLICATION_JSON+ ";charset=Cp1252")
+    public String getPersonWithPhone(@PathParam("phone") String phone) {
+        int phoneNo = Integer.parseInt(phone);
+        return perConv.personToJson(perFacade.getPerson(phoneNo));
+    }
+    
 //    
 //    @GET
 //    @Path("search/{searchstring}")
