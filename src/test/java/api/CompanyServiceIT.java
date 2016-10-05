@@ -134,12 +134,16 @@ public class CompanyServiceIT {
     public void testCreateCompany() {
         Company c1 = new Company("It2Learn", "Really cool", 992233, 10000, 10000);
         String json = gson.toJson(c1);
+        //Post company to DB using rest api
         Response r = given().contentType("application/json").body(json).when().post();
         int id = r.path("id");
 
-        String body = r.getBody().asString();
-        System.out.println("Response: " + body);
-        assertThat(id, is(notNullValue()));
+       
+        //Getting company from DB using facade
+        Company ca1 = cf.getCompany(id);
+        
+        //Test if name of company matches the db.
+        assertThat(c1.getName(), equalTo(ca1.getName()));
     }
 
     /**
