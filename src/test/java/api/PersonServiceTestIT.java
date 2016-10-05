@@ -6,6 +6,8 @@
 package api;
 
 import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
+import entity.Address;
+import entity.CityInfo;
 import entity.Person;
 import facade.IPersonFacade;
 import facade.PersonFacade;
@@ -25,18 +27,20 @@ import javax.persistence.Persistence;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.Ignore;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 /**
  *
  * @author edipetres
  */
-public class PersonServiceTest {
+public class PersonServiceTestIT {
     
     int personID;
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
     IPersonFacade pf = new PersonFacade(emf);
     Person person;
 
-    public PersonServiceTest() {
+    public PersonServiceTestIT() {
     }
 
         @BeforeClass
@@ -45,6 +49,8 @@ public class PersonServiceTest {
         RestAssured.port = 8080;
         RestAssured.basePath = "CA2/api/person";
         RestAssured.defaultParser = Parser.JSON;
+        
+        
     }
 
     @AfterClass
@@ -53,7 +59,9 @@ public class PersonServiceTest {
 
     @Before
     public void setUp() {
-        
+        person = pf.addPerson(new Person("Edmond", "Petres"));
+        personID = person.getId();
+        person = pf.addAddress(person, new Address("testStreet", "additionalInfo"), 2800);
     }
 
     @After
@@ -87,12 +95,8 @@ public class PersonServiceTest {
      * Test of getPersonCompleteWithID method, of class PersonService.
      */
     @Test
-    
     public void testGetPersonCompleteWithID() {
-        person = pf.addPerson(new Person("Edmond", "Petres"));
-        personID = person.getId();
-        System.out.println("id used for person: "+20);
-        given().pathParam("id", 20).
+        given().pathParam("id", personID).
             when().
                 get("/complete/{id}").
             then().
@@ -105,13 +109,12 @@ public class PersonServiceTest {
      */
     @Test
     public void testGetAllPersonsContactinfo() {
-//        System.out.println("getAllPersonsContactinfo");
-//        PersonService instance = new PersonService();
-//        String expResult = "";
-//        String result = instance.getAllPersonsContactinfo();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+        given().pathParam("id", personID).when().get("/contactinfo/{id}").then().statusCode(200).
+                body("firstName", equalTo(person.getFirstName())).
+                body("lastName",equalTo(person.getLastName())).
+                body("email",equalTo(person.getEmail())).
+                body("street",equalTo(person.getAddress().getStreet())).
+                body("zip",equalTo(person.getAddress().getCityInfo().getZipCode()));
     }
 
     /**
@@ -119,14 +122,12 @@ public class PersonServiceTest {
      */
     @Test
     public void testGetPersonContactinfoWithID() {
-//        System.out.println("getPersonContactinfoWithID");
-//        int id = 0;
-//        PersonService instance = new PersonService();
-//        String expResult = "";
-//        String result = instance.getPersonContactinfoWithID(id);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+        given().pathParam("id", personID).when().get("/contactinfo/{id}").then().statusCode(200).
+                body("firstName", equalTo(person.getFirstName())).
+                body("lastName",equalTo(person.getLastName())).
+                body("email",equalTo(person.getEmail())).
+                body("street",equalTo(person.getAddress().getStreet())).
+                body("zip",equalTo(person.getAddress().getCityInfo().getZipCode()));
     }
 
     /**
