@@ -6,6 +6,7 @@
 package facade;
 
 import entity.Address;
+import entity.CityInfo;
 import entity.Company;
 import entity.Phone;
 import java.util.List;
@@ -38,6 +39,7 @@ public interface ICompanyFacade {
     public Company deleteCompany(int id);
     
      public Company addAddress(Company co, Address address, int zipcode);
+     public List<CityInfo> getZipcodes();
 
     public List<Company> searchCompany(String search);
 }

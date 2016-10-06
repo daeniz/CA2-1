@@ -227,6 +227,18 @@ public class CompanyFacade implements ICompanyFacade {
 
 
         return companies;
+    public List<CityInfo> getZipcodes() {
+        EntityManager em = this.getEntityManager();
+        List<CityInfo> cityInfo = null;
+        try{
+           Query q = em.createQuery("SELECT c FROM CityInfo c");
+            cityInfo = q.getResultList();
+        } finally {
+            em.close();
+            
+        }
+        return cityInfo;
+
     }
 
 }

@@ -10,13 +10,13 @@ $(function () {
 
     $("#listpeople").click(function (event) {
         event.preventDefault();
-            $("#searchterm").show();
+        $("#searchterm").show();
 
         renderPersonListAll();
     });
-    $("#searchterm").on('keyup', function(e) {
+
+    $("#searchterm").on('keyup', function (e) {
         e.preventDefault();
-        $("#results").html("");
 
         var q = $("#searchterm").val();
         var request = $.ajax({
@@ -31,6 +31,28 @@ $(function () {
         request.fail(function (jqXHR, textStatus) {
             alert("request failed " + textStatus);
         });
+
+    });
+
+    $("#listzipcodes").on('click', function (e) {
+        e.preventDefault();
+        $.get("api/company/zip", function (data) {
+            var list = data == null ? [] : (data instanceof Array ? data : [data]);
+            $("#content").html("<table  class='table table-striped'>" +
+                    "<thead> <tr><th>Zip Code</th><th>city</th>" +
+                    "<th>actions</th></thead><tbody id='mytable'>");
+
+            $.each(list, function (index, zip) {
+                $("#mytable").append("<tr> " +
+                        "<td>" + zip['zipCode'] + "</td> " +
+                        "<td>" + zip['city'] + "</td><td><a href='#'>List people</a></td>"
+                        );
+
+            });
+
+            $("#mytable").append("</tr></tbody></table>");
+
+        }, "json");
 
     });
 
