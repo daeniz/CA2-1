@@ -39,7 +39,7 @@ public class PersonService {
 
     @Context
     private UriInfo context;
-    
+
     private static IPersonFacade perFacade = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static PersonConverter perConv = new PersonConverter();
@@ -50,8 +50,7 @@ public class PersonService {
      */
     public PersonService() {
     }
-    
-    
+
     @GET
     @Path("complete")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
@@ -67,7 +66,7 @@ public class PersonService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonCompleteWithID(@PathParam("id") int id) {
         return perConv.personToJson(perFacade.getPerson(id));
-        
+
     }
 //    
 
@@ -79,12 +78,12 @@ public class PersonService {
         return perConv.personsContactinfoToJson(persons);
     }
 //  
-    
+
     @GET
     @Path("contactinfo/{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonContactinfoWithID(@PathParam("id") int id) {
-        
+
         return perConv.personContactinfoToJson(perFacade.getPerson(id));
     }
 //    
@@ -96,32 +95,49 @@ public class PersonService {
         throw new UnsupportedOperationException();
     }
 
-    
     @GET
     @Path("complete/zip/{zip}")
-    @Produces(MediaType.APPLICATION_JSON+ ";charset=Cp1252")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonWithZip(@PathParam("zip") String zip) {
         int zipCode = Integer.parseInt(zip);
         List<Person> persons = perFacade.getPersons(zipCode);
         return perConv.personsToJson(persons);
     }
-    
+
     @GET
     @Path("complete/phone/{phone}")
-    @Produces(MediaType.APPLICATION_JSON+ ";charset=Cp1252")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonWithPhone(@PathParam("phone") String phone) {
         throw new UnsupportedOperationException();
 //        int phoneNo = Integer.parseInt(phone);
 //        return perConv.personToJson(perFacade.getPerson(new Phone(phoneNo)));
     }
-    
-    
+
+    @GET
+    @Path("search")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String smartSearchNoParam() {
+        List<Person> persons = perFacade.getPersons();
+        return perConv.personsToJson(persons);
+//        List<Person> persons = ss.search(searchStr);
+//        return perConv.personsToJson(persons);
+    }
+
     @GET
     @Path("search/{searchstring}")
     @Produces(MediaType.APPLICATION_JSON)
+
     public String smartSearch(@PathParam("searchstring") String searchStr) {
-        List<Person> persons = ss.search(searchStr);
-        return perConv.personsToJson(persons);
+        if (searchStr != null || !searchStr.equalsIgnoreCase("")) {
+            List<Person> persons = perFacade.searchPersons(searchStr);
+            return perConv.personsToJson(persons);
+        } else {
+            List<Person> persons = perFacade.getPersons();
+            return perConv.personsToJson(persons);
+        }
+
+//        List<Person> persons = ss.search(searchStr);
+//        return perConv.personsToJson(persons);
     }
 
 }

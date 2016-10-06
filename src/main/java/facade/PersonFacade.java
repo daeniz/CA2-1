@@ -141,7 +141,20 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public List<Person> searchPersons(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.getEntityManager();
+        search += "%";
+        List<Person> persons = new ArrayList();
+        try {
+            Query q = em.createQuery("select distinct p from Person AS p "
+                    + "LEFT JOIN p.hobbies AS h Where h.name like ?1 or "
+                    + "p.firstName like ?1 or p.lastName like ?1");
+            q.setParameter("1", search);
+            persons = q.getResultList();
+        } finally {
+            em.close();
+        }
+        return persons;
+        
     }
 
     @Override

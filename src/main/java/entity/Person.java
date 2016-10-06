@@ -11,9 +11,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
 /**
@@ -28,7 +30,8 @@ public class Person extends InfoEntity implements Serializable {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Integer id;
-    @ManyToMany (cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToMany (cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
     private List<Hobby> hobbies = new ArrayList();
     private String firstName;
     private String lastName;
