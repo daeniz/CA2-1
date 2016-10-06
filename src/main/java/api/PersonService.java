@@ -56,7 +56,6 @@ public class PersonService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsComplete() {
         List<Person> persons = perFacade.getPersons();
-        System.out.println("Before converter");
         return perConv.personsToJson(persons);
     }
 

@@ -111,6 +111,8 @@ public class CompanyService {
     @Consumes(MediaType.APPLICATION_JSON)
     public String editCompany(String json) {
         Company com = jsc.createCompany(json);
+        System.out.println(com.getId());
+        System.out.println(com.getCvr());
         return jsc.companyJson(comFacade.editCompany(com));
     }
 
