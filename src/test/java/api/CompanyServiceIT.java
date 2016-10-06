@@ -21,11 +21,13 @@ import io.restassured.parsing.Parser;
 import static io.restassured.path.json.JsonPath.from;
 import io.restassured.response.Response;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import static org.hamcrest.Matchers.*;
 import org.junit.Ignore;
+import util.JSONConverter;
 
 /**
  *
@@ -35,12 +37,14 @@ public class CompanyServiceIT {
 
     public static Response response;
     public static String jsonAsString;
-    public int numberOfCompanies;
+    private int numberOfCompanies;
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
-    public CompanyFacade cf = new CompanyFacade(emf);
+    private CompanyFacade cf = new CompanyFacade(emf);
     private Gson gson = new Gson();
     private int testCompanyId;
-    Company testCompany;
+    private Company testCompany;
+    private int numberOfCompaniesZip;
+    private JSONConverter jsc = new JSONConverter();
 
     public CompanyServiceIT() {
     }
@@ -63,6 +67,7 @@ public class CompanyServiceIT {
         testCompany = cf.createCompany(testCompany);
         testCompanyId = testCompany.getId();
         numberOfCompanies = cf.getCompanies().size();
+        numberOfCompaniesZip = cf.getCompanies(2800).size();
 
     }
 
@@ -95,7 +100,7 @@ public class CompanyServiceIT {
                 statusCode(200).body("name", equalTo(testCompany.getName()));
 
     }
-    
+
     /**
      * Test of getCompanyComplete method, of class CompanyService.
      */
@@ -125,6 +130,16 @@ public class CompanyServiceIT {
      */
     @Test
     public void testGetCompaniesInACity() {
+        response = given().when().
+                get("complete/zip/2800").then().
+                contentType(ContentType.JSON).
+                extract().response();
+
+        jsonAsString = response.asString();
+
+        ArrayList<Map<String, ?>> jsonAsArrayList = from(jsonAsString).get("");
+        assertThat(jsonAsArrayList.size(), equalTo(numberOfCompaniesZip));
+
     }
 
     /**
@@ -138,8 +153,10 @@ public class CompanyServiceIT {
         int id = r.path("id");
 
         String body = r.getBody().asString();
+        Company cFromDB = cf.getCompany(id);
         System.out.println("Response: " + body);
         assertThat(id, is(notNullValue()));
+        assertThat(c1.getName(), equalTo(cFromDB.getName()));
     }
 
     /**
@@ -147,6 +164,13 @@ public class CompanyServiceIT {
      */
     @Test
     public void testEditCompany() {
+        testCompany.setDescription("New description");
+        testCompany.setCvr(222222);
+        String json = jsc.companyJson(testCompany);
+        given().contentType("application/json").body(json).when().put().then().statusCode(200);
+        Company cFromDB = cf.getCompany(testCompany.getId());
+        System.out.println(cFromDB.getDescription());
+        //assertThat(cFromDB.getDescription(), equalTo("New description"));
 
     }
 
