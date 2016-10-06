@@ -20,17 +20,18 @@ $(function () {
             url: "api/company/complete",
             dataType: "json", // data type of response
             success: function (data) {
-                var list = data == null ? [] : (data instanceof Array ? data : [data]);
+                var list = data === null ? [] : (data instanceof Array ? data : [data]);
                 //Add table header
-                $('#content').html("<table class='table'><thead><tr><th>Name</th>" + 
+                $('#content').html("<table id='comTable' class='table'><thead><tr><th>Name</th>" + 
                         " <th>Description</th><th>Street</th><th>CVR</th>");
                 //Go through the list
                 $.each(list, function (index, company) {
-                    $('#content').append("<tr><td>" + company.name + "</td><td>" + company.description
+                    $('#comTable').append("<tr><td>" + company.name + "</td><td>" + company.description
                             + "</td><td> " + company.street + "</td><td>"
-                            + company.cvr + "</td><td>"
+                            + company.cvr + "</td></tr>"
                             );
                 });
+                $("comTable").append("</table>");
             }
         });
     }
@@ -43,17 +44,17 @@ $(function () {
         var q1 = $("#search").val();
         q = q1.trim();
 
-        $.get("api/country/search/" + q, function (data) {
-            var list = data == null ? [] : (data instanceof Array ? data : [data]);
-            $('#countrylist').text("");
-            $.each(list, function (index, country) {
-                $('#countrylist').append("<tr><td>" + country.code + "</td><td>" + country.name
-                        + "</td><td> " + country.continent + "</td><td>"
-                        + country.capital + "</td><td>"
-                        + "<a href='#' class='cities' data-city='" + country.code + "'>List cities </a></td></tr>"
-                        );
+        $.get("api/company/search/" + q, function (data) {
+            var list = data === null ? [] : (data instanceof Array ? data : [data]);
+            $('#content').html("<table id='comTable' class='table'><thead><tr><th>Name</th>" + 
+                        " <th>Description</th><th>Street</th><th>CVR</th>");
+            $.each(list, function (index, company) {
+                $('#comTable').append("<tr><td>" + company.name + "</td><td>" + company.description
+                            + "</td><td> " + company.street + "</td><td>"
+                            + company.cvr + "</td></tr>"
+                            );
             });
         });
     });
-})
+});
 

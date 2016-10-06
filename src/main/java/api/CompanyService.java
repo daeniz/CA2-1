@@ -97,6 +97,13 @@ public class CompanyService {
         companies = comFacade.getCompanies(zip);
         return jsc.companiesJson(companies);
     }
+    
+    @GET
+    @Path("search/{searchstring}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
+    public String getSearch(@PathParam("searchstring") String search) {
+        return jsc.companiesContactInfo(comFacade.searchCompany(search));
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")

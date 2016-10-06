@@ -38,4 +38,6 @@ public interface ICompanyFacade {
     public Company deleteCompany(int id);
     
      public Company addAddress(Company co, Address address, int zipcode);
+
+    public List<Company> searchCompany(String search);
 }

@@ -199,4 +199,34 @@ public class CompanyFacade implements ICompanyFacade {
 
     }
 
+    @Override
+    public List<Company> searchCompany(String search) {
+        List<Company> companies;
+        System.out.println("SearchCompany");
+
+        EntityManager em = this.getEntityManager();
+        Query q;
+        try{
+            int i = Integer.valueOf(search);
+            q = em.createQuery(   "SELECT DISTINCT c FROM Company c LEFT OUTER JOIN c.address a LEFT OUTER JOIN a.cityInfo ci " +
+                                    "LEFT OUTER JOIN c.phones p where p.number=?1 or c.cvr=?1");
+            q.setParameter("1", i);
+            
+        }
+        catch(Exception e){
+            q = em.createQuery(   "SELECT DISTINCT c FROM Company c LEFT OUTER JOIN c.address a LEFT OUTER JOIN a.cityInfo ci " +
+                                    "LEFT OUTER JOIN c.phones p where a.street like ?1 or c.name like ?1 or ci.city like ?1");
+            q.setParameter("1", "%"+search+"%");
+        }
+        
+        
+            
+            companies=q.getResultList();
+            
+            System.out.println(companies.size());
+
+
+        return companies;
+    }
+
 }
