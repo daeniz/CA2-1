@@ -39,10 +39,10 @@ public class CompanyService {
 
     @Context
     private UriInfo context;
-    private ICompanyFacade comFacade = new CompanyFacade(Persistence.createEntityManagerFactory("PU"));
-    private IPersonFacade perFacade = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private JSONConverter jsc = new JSONConverter();
+    private static ICompanyFacade comFacade = new CompanyFacade(Persistence.createEntityManagerFactory("PU"));
+    private static IPersonFacade perFacade = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static JSONConverter jsc = new JSONConverter();
 
     /**
      * Creates a new instance of CompanyService

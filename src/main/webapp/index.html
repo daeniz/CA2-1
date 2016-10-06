@@ -15,6 +15,7 @@
 
 
                 $("#searchterm").keyup(function (e) {
+                    e.preventDefault();
                     $("#results").html("");
                     var size = $("#searchterm").val().length;
                     if (size > 2) {

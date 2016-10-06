@@ -6,20 +6,12 @@
 
 
 $(function () {
-    $("#citytable").hide();
     $("#listcompanies").click(function () {
         event.preventDefault();
        
         renderList();
     });
-    $("#countrylist").on("click", "a.cities", function () {
-        event.preventDefault();
-        $("#countrytable").hide();
-        $("#citytable").show();
-        var id = $(this).data("city");
-        window.console.log(id);
-        renderCityList(id);
-    });
+    
     //For rendering the Companylist
     function renderList() {
         $.ajax({
@@ -42,22 +34,7 @@ $(function () {
         });
     }
 
-    //For rendering the personlist
-    function renderCityList(id) {
-        $.ajax({
-            type: 'GET',
-            url: "api/country/cities/" + id,
-            dataType: "json", // data type of response
-            success: function (data) {
-                var list = data == null ? [] : (data instanceof Array ? data : [data]);
-                $('#countrylist').text("");
-                $.each(list, function (index, city) {
-                    $('#citylist').append("<tr><td>" + city.name + "</td><td>" + city.population
-                            + "</td>");
-                });
-            }
-        });
-    }
+   
 
     $("#search").keyup(function (e) {
         event.preventDefault();

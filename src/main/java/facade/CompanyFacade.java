@@ -188,12 +188,12 @@ public class CompanyFacade implements ICompanyFacade {
 
         EntityManager em = this.getEntityManager();
         List<Company> companies = new ArrayList();
-        try {
-            Query q = em.createNativeQuery(sql, Company.class);
-            companies = q.getResultList();
-        } finally {
-            em.close();
-        }
+//        try {
+//            Query q = em.createNativeQuery(sql, Company.class);
+//            companies = q.getResultList();
+//        } finally {
+//            em.close();
+//        }
 
         return companies;
 

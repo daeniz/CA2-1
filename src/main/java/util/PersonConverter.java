@@ -23,8 +23,10 @@ public class PersonConverter {
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public String personsToJson(List<Person> persons) {
+        System.out.println("Starting converter");
         JsonArray jArray = new JsonArray();
         for (Person p : persons) {
+            System.out.println("Adding person");
             JsonObject jo = new JsonObject();
             jo.addProperty("id", p.getId());
             jo.addProperty("firstName", p.getFirstName());
@@ -33,14 +35,19 @@ public class PersonConverter {
 
             //adding address properties
             JsonObject address = new JsonObject();
+            if(p.getAddress()!=null){
             address.addProperty("street", p.getAddress().getStreet());
             address.addProperty("city", p.getAddress().getCityInfo().getCity());
             address.addProperty("zip", p.getAddress().getCityInfo().getZipCode());
             jo.add("address", address);
+            }
 
             //adding different hobbies
-            if (p.getHobbies().size() > 0) {
+            System.out.println("Before adding hobby");
+            if (p.getHobbies()!=null) {
+                System.out.println("Adding hobby");
                 JsonArray hobbyArray = new JsonArray();
+                
                 for (Hobby hobby : p.getHobbies()) {
                     JsonObject hobbyobj = new JsonObject();
                     hobbyobj.addProperty("name", hobby.getName());
@@ -49,8 +56,10 @@ public class PersonConverter {
                 }
                 jo.add("hobbies", hobbyArray);
             }
+            System.out.println("Adding to array");
             jArray.add(jo);
         }
+        System.out.println("Trying to output array: "+ jArray);
         return gson.toJson(jArray);
     }
 

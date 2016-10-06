@@ -40,10 +40,10 @@ public class PersonService {
     @Context
     private UriInfo context;
     
-    private IPersonFacade perFacade = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private PersonConverter perConv = new PersonConverter();
-    private SmartSearch ss = new SmartSearch();
+    private static IPersonFacade perFacade = new PersonFacade(Persistence.createEntityManagerFactory("PU"));
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static PersonConverter perConv = new PersonConverter();
+    private static SmartSearch ss = new SmartSearch();
 
     /**
      * Creates a new instance of PersonService
@@ -57,6 +57,7 @@ public class PersonService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsComplete() {
         List<Person> persons = perFacade.getPersons();
+        System.out.println("Before converter");
         return perConv.personsToJson(persons);
     }
 

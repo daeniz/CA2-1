@@ -53,6 +53,7 @@ public class PersonFacade implements IPersonFacade {
             Query q = em.createQuery("Select p From Person p");
             persons = q.getResultList();
         } finally {
+            System.out.println("PersonFacade - finally");
             em.close();
         }
         return persons;
