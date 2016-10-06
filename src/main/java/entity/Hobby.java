@@ -9,9 +9,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
 /**
@@ -21,7 +23,7 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Hobby implements Serializable {
 
-    @ManyToMany(mappedBy = "hobbies")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "hobbies")
     private List<Person> persons = new ArrayList();
     private String name;
     private String description;
@@ -30,13 +32,14 @@ public class Hobby implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    public Hobby(){
-        
+
+    public Hobby() {
+
     }
-    public Hobby(String name, String description){
-        this.name=name;
-        this.description=description;
+
+    public Hobby(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public Integer getId() {
@@ -54,12 +57,12 @@ public class Hobby implements Serializable {
     public void setPersons(List<Person> persons) {
         this.persons = persons;
     }
-    
-/**
- * adds a hobby to the Person as well as adding this Person to the Hobby!
- *
- * @param  person the person to be added to the Person
- */
+
+    /**
+     * adds a hobby to the Person as well as adding this Person to the Hobby!
+     *
+     * @param person the person to be added to the Person
+     */
     public void addPerson(Person person) {
         this.persons.add(person);
         person.getHobbies().add(this);  //Thoughts on this approach?
@@ -80,8 +83,6 @@ public class Hobby implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -107,5 +108,5 @@ public class Hobby implements Serializable {
     public String toString() {
         return "entity.Hobby[ id=" + id + " ]";
     }
-    
+
 }

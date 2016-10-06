@@ -9,49 +9,9 @@
         <script src="js/bootstrap.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/scripts.js" type="text/javascript"></script>
-
+        <script src="js/PersonScripts.js" type="text/javascript"></script>
         <script type="text/javascript">// <![CDATA[
-            $(document).ready(function () {
-
-
-                $("#searchterm").keyup(function (e) {
-                    e.preventDefault();
-                    $("#results").html("");
-                    var size = $("#searchterm").val().length;
-                    if (size > 2) {
-                        var q = $("#searchterm").val();
-                        var request = $.ajax({
-                            url: "api/person/search/" + q,
-                            method: "GET",
-                            dataType: "json"
-                        });
-                        request.done(function (data) {
-                            var result = data;
-
-                            //$("#results").append('<table class="table table-bordered">');
-                            //$("#results").append('<thead> <tr> <th>#</th>   <th>First Name</th>   <th>Last Name</th>   </tr> </thead>');
-                            //$("#results").append('<tbody>');
-                            result.forEach(function (person) {
-                                $("#results").append("<tr> <td>" + 
-                                        person['id'] + "</td><td> " + 
-                                        person['firstName'] + "</td><td>" + 
-                                        person['lastName'] + "</td><td>"+ 
-                                        person['email'] + "</td><td>" + 
-                                        person['address']['street'] + "</td><td>" +
-                                        person['address']['city'] + "</td><td>" +
-                                        person['address']['zip'] + "</td>" +                                        
-                                        "</tr>");
-                            });
-                            //$("#results").append('</tbody>');
-                            //$("#results").append('</table>');
-                        });
-                        request.fail(function (jqXHR, textStatus) {
-                            alert("request failed " + textStatus);
-                        });
-                    }
-                });
-
-            });
+           
         </script>
 
     </head>
@@ -71,7 +31,7 @@
         </nav> 
 
 
-        <div class="container">
+        <div class="container" id="personlist">
             <input id="searchterm" type="text"/>
             <div class="row">
                 <div class="col-sm-6">
@@ -94,6 +54,10 @@
                     </table>
                 </div>
             </div>
+        </div>
+        
+        <div id="content" class="container">
+            
         </div>
 
     </body>

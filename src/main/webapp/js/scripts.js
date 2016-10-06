@@ -7,6 +7,7 @@
 
 $(function () {
     $("#listcompanies").click(function () {
+        $("#personlist").hide();
         event.preventDefault();
        
         renderList();
@@ -21,8 +22,8 @@ $(function () {
             success: function (data) {
                 var list = data == null ? [] : (data instanceof Array ? data : [data]);
                 //Add table header
-                $('#content').html("<table class='table'><thead><tr><th>1</th>" + 
-                        " <th>2</th><th>3</th><th>4</th>");
+                $('#content').html("<table class='table'><thead><tr><th>Name</th>" + 
+                        " <th>Description</th><th>Street</th><th>CVR</th>");
                 //Go through the list
                 $.each(list, function (index, company) {
                     $('#content').append("<tr><td>" + company.name + "</td><td>" + company.description
