@@ -35,19 +35,19 @@ public class PersonConverter {
 
             //adding address properties
             JsonObject address = new JsonObject();
-            if(p.getAddress()!=null){
-            address.addProperty("street", p.getAddress().getStreet());
-            address.addProperty("city", p.getAddress().getCityInfo().getCity());
-            address.addProperty("zip", p.getAddress().getCityInfo().getZipCode());
-            jo.add("address", address);
+            if (p.getAddress() != null) {
+                address.addProperty("street", p.getAddress().getStreet());
+                address.addProperty("city", p.getAddress().getCityInfo().getCity());
+                address.addProperty("zip", p.getAddress().getCityInfo().getZipCode());
+                jo.add("address", address);
             }
 
             //adding different hobbies
             System.out.println("Before adding hobby");
-            if (p.getHobbies()!=null) {
+            if (p.getHobbies() != null) {
                 System.out.println("Adding hobby");
                 JsonArray hobbyArray = new JsonArray();
-                
+
                 for (Hobby hobby : p.getHobbies()) {
                     JsonObject hobbyobj = new JsonObject();
                     hobbyobj.addProperty("name", hobby.getName());
@@ -59,7 +59,7 @@ public class PersonConverter {
             System.out.println("Adding to array");
             jArray.add(jo);
         }
-        System.out.println("Trying to output array: "+ jArray);
+        System.out.println("Trying to output array: " + jArray);
         return gson.toJson(jArray);
     }
 
@@ -73,13 +73,15 @@ public class PersonConverter {
 
         //adding address properties
         JsonObject address = new JsonObject();
-        address.addProperty("street", p.getAddress().getStreet());
-        address.addProperty("city", p.getAddress().getCityInfo().getCity());
-        address.addProperty("zip", p.getAddress().getCityInfo().getZipCode());
-        jo.add("address", address);
+        if (p.getAddress() != null) {
+            address.addProperty("street", p.getAddress().getStreet());
+            address.addProperty("city", p.getAddress().getCityInfo().getCity());
+            address.addProperty("zip", p.getAddress().getCityInfo().getZipCode());
+            jo.add("address", address);
+        }
 
         //adding different hobbies
-        if (p.getHobbies().size() > 0) {
+        if (p.getHobbies() != null) {
             JsonArray hobbyArray = new JsonArray();
             for (Hobby hobby : p.getHobbies()) {
                 JsonObject hobbyobj = new JsonObject();
@@ -98,12 +100,14 @@ public class PersonConverter {
         jsonObject.addProperty("firstName", person.getFirstName());
         jsonObject.addProperty("lastName", person.getLastName());
         jsonObject.addProperty("email", person.getEmail());
-        jsonObject.addProperty("street", person.getAddress().getStreet());
-        jsonObject.addProperty("additionalinfo", person.getAddress().getAdditionalInfo());
-        jsonObject.addProperty("city", person.getAddress().getCityInfo().getCity());
-        jsonObject.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
+        if (person.getAddress() != null) {
 
-        if (person.getPhones().size() > 0) {
+            jsonObject.addProperty("street", person.getAddress().getStreet());
+            jsonObject.addProperty("additionalinfo", person.getAddress().getAdditionalInfo());
+            jsonObject.addProperty("city", person.getAddress().getCityInfo().getCity());
+            jsonObject.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
+        }
+        if (person.getPhones() != null) {
             JsonArray phones = new JsonArray();
             for (Phone phone : person.getPhones()) {
                 JsonObject jsonObjectPhone = new JsonObject();
@@ -123,12 +127,14 @@ public class PersonConverter {
             jsonObject.addProperty("firstName", person.getFirstName());
             jsonObject.addProperty("lastName", person.getLastName());
             jsonObject.addProperty("email", person.getEmail());
-            jsonObject.addProperty("street", person.getAddress().getStreet());
-            jsonObject.addProperty("additionalinfo", person.getAddress().getAdditionalInfo());
-            jsonObject.addProperty("city", person.getAddress().getCityInfo().getCity());
-            jsonObject.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
+            if (person.getAddress() != null) {
+                jsonObject.addProperty("street", person.getAddress().getStreet());
+                jsonObject.addProperty("additionalinfo", person.getAddress().getAdditionalInfo());
+                jsonObject.addProperty("city", person.getAddress().getCityInfo().getCity());
+                jsonObject.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
+            }
 
-            if (person.getPhones().size() > 0) {
+            if (person.getPhones() != null) {
                 JsonArray phones = new JsonArray();
                 for (Phone phone : person.getPhones()) {
                     JsonObject jsonObjectPhone = new JsonObject();
