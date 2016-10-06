@@ -6,6 +6,7 @@
 
 $(function () {
     $("#searchterm").hide();
+    $("#searchterm2").hide();
 
     $("#listpeople").click(function (event) {
         event.preventDefault();

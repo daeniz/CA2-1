@@ -6,8 +6,12 @@
 
 
 $(function () {
+    $("#searchterm").hide();
+    $("#searchterm2").hide();
     $("#listcompanies").click(function () {
         $("#personlist").hide();
+        $("#searchterm").hide();
+        $("#searchterm2").show();
         event.preventDefault();
        
         renderList();
@@ -22,8 +26,8 @@ $(function () {
             success: function (data) {
                 var list = data === null ? [] : (data instanceof Array ? data : [data]);
                 //Add table header
-                $('#content').html("<table id='comTable' class='table'><thead><tr><th>Name</th>" + 
-                        " <th>Description</th><th>Street</th><th>CVR</th>");
+                $('#content').html("<table id='comTable' class='table table-striped'><thead><tr><th>Name</th>" + 
+                        " <th>Description</th><th>Street</th><th>CVR</th><tbody id='comtable'>");
                 //Go through the list
                 $.each(list, function (index, company) {
                     $('#comTable').append("<tr><td>" + company.name + "</td><td>" + company.description
@@ -31,29 +35,32 @@ $(function () {
                             + company.cvr + "</td></tr>"
                             );
                 });
-                $("comTable").append("</table>");
+                $("comTable").append("</tbody></table>");
             }
         });
     }
 
+
    
 
-    $("#search").keyup(function (e) {
+    $("#searchterm2").on('keyup', function(e) {
+        
         event.preventDefault();
 
-        var q1 = $("#search").val();
+        var q1 = $("#searchterm2").val();
         q = q1.trim();
 
         $.get("api/company/search/" + q, function (data) {
             var list = data === null ? [] : (data instanceof Array ? data : [data]);
             $('#content').html("<table id='comTable' class='table'><thead><tr><th>Name</th>" + 
-                        " <th>Description</th><th>Street</th><th>CVR</th>");
+                        " <th>Description</th><th>Street</th><th>CVR</th><tbody id='comtable'>");
             $.each(list, function (index, company) {
                 $('#comTable').append("<tr><td>" + company.name + "</td><td>" + company.description
                             + "</td><td> " + company.street + "</td><td>"
                             + company.cvr + "</td></tr>"
                             );
             });
+            $("comTable").append("</tbody></table>");
         });
     });
 });

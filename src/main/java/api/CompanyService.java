@@ -102,7 +102,7 @@ public class CompanyService {
     @Path("search/{searchstring}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getSearch(@PathParam("searchstring") String search) {
-        return jsc.companiesContactInfo(comFacade.searchCompany(search));
+        return jsc.companiesJson(comFacade.searchCompany(search));
     }
 
     @POST
