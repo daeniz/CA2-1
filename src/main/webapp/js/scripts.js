@@ -7,7 +7,6 @@
 
 $(function () {
     $("#listcompanies").click(function () {
-        $("#personlist").hide();
         event.preventDefault();
        
         renderList();

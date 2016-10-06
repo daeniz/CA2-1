@@ -7,6 +7,7 @@ package api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entity.CityInfo;
 import entity.Company;
 import facade.CompanyFacade;
 import facade.ICompanyFacade;
@@ -96,6 +97,16 @@ public class CompanyService {
         List<Company> companies;
         companies = comFacade.getCompanies(zip);
         return jsc.companiesJson(companies);
+    }
+
+    @GET
+    @Path("zip")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
+    public String getZipCodes(@PathParam("zip") int zip) {
+        List<CityInfo> zips;
+        zips = comFacade.getZipcodes();
+        return gson.toJson(zips);
+        
     }
 
     @POST
