@@ -227,6 +227,7 @@ public class CompanyFacade implements ICompanyFacade {
 
 
         return companies;
+    }
     public List<CityInfo> getZipcodes() {
         EntityManager em = this.getEntityManager();
         List<CityInfo> cityInfo = null;
