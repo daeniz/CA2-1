@@ -128,6 +128,8 @@ public class CompanyService {
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     @Consumes(MediaType.APPLICATION_JSON)
     public String editCompany(String json) {
+        System.out.println("json");
+        System.out.println(json);
         Company com = jsc.createCompany(json);
         System.out.println(com.getId());
         System.out.println(com.getCvr());
