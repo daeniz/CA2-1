@@ -93,7 +93,7 @@ public class PersonConverter {
                     phoneObj.addProperty("description", phone.getNumber());
                     phoneArray.add(phoneObj);
                 }
-                jo.add("hobbies", phoneArray);
+                jo.add("phone", phoneArray);
             }
 
         //adding different hobbies
