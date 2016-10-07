@@ -39,7 +39,18 @@ public class PersonConverter {
                 address.addProperty("zip", p.getAddress().getCityInfo().getZipCode());
                 jo.add("address", address);
             }
+            //adding different hobbies
+            if (p.getPhones() != null) {
+                JsonArray phoneArray = new JsonArray();
 
+                for (Phone phone : p.getPhones()) {
+                    JsonObject phoneObj = new JsonObject();
+                    phoneObj.addProperty("number", phone.getNumber());
+                    phoneObj.addProperty("description", phone.getNumber());
+                    phoneArray.add(phoneObj);
+                }
+                jo.add("hobbies", phoneArray);
+            }
             //adding different hobbies
             if (p.getHobbies() != null) {
                 JsonArray hobbyArray = new JsonArray();
@@ -73,6 +84,17 @@ public class PersonConverter {
             address.addProperty("zip", p.getAddress().getCityInfo().getZipCode());
             jo.add("address", address);
         }
+        if (p.getPhones() != null) {
+                JsonArray phoneArray = new JsonArray();
+
+                for (Phone phone : p.getPhones()) {
+                    JsonObject phoneObj = new JsonObject();
+                    phoneObj.addProperty("number", phone.getNumber());
+                    phoneObj.addProperty("description", phone.getNumber());
+                    phoneArray.add(phoneObj);
+                }
+                jo.add("hobbies", phoneArray);
+            }
 
         //adding different hobbies
         if (p.getHobbies() != null) {
