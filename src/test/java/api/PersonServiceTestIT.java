@@ -5,30 +5,23 @@
  */
 package api;
 
-import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
 import entity.Address;
-import entity.CityInfo;
 import entity.Person;
 import facade.IPersonFacade;
 import facade.PersonFacade;
 import io.restassured.RestAssured;
-import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static io.restassured.RestAssured.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.Ignore;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.MatcherAssert.assertThat;
 /**
  *
  * @author edipetres
