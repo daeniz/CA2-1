@@ -91,7 +91,7 @@ public class CompanyService {
     }
 
     @GET
-    @Path("complete/zip/{zip}")
+    @Path("zip/{zip}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getCompaniesInACity(@PathParam("zip") int zip) {
         List<Company> companies;

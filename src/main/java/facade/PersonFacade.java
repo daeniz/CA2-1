@@ -94,9 +94,10 @@ public class PersonFacade implements IPersonFacade {
         EntityManager em = this.getEntityManager();
         Person person;
         try {
-            Phone p = em.find(Phone.class, phone);
-            Query q = em.createQuery("Select p FROM InfoEntity p WHERE p.phones = ?1");
-            q.setParameter(1, p);
+            int number = phone.getNumber();
+            
+            Query q = em.createQuery("Select p FROM InfoEntity p LEFT JOIN p.phones ph WHERE ph.number = ?1");
+            q.setParameter(1, number);
 
             person = (Person) q.getSingleResult();
 

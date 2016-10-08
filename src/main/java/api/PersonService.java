@@ -8,6 +8,7 @@ package api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.Company;
+import entity.Hobby;
 import entity.Person;
 import entity.Phone;
 import facade.CompanyFacade;
@@ -27,6 +28,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import org.codehaus.plexus.util.StringUtils;
 import util.PersonConverter;
 import util.SmartSearch;
 
@@ -89,14 +91,14 @@ public class PersonService {
 //    
 
     @GET
-    @Path("{hobby}")
+    @Path("hobby/{hobby}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getAllPersonsWithHobby(@PathParam("hobby") String hobby) {
-        throw new UnsupportedOperationException();
+        return perConv.personsToJson(perFacade.getPersons(new Hobby(hobby, "")));
     }
 
     @GET
-    @Path("complete/zip/{zip}")
+    @Path("zip/{zip}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonWithZip(@PathParam("zip") String zip) {
         int zipCode = Integer.parseInt(zip);
@@ -105,12 +107,17 @@ public class PersonService {
     }
 
     @GET
-    @Path("complete/phone/{phone}")
+    @Path("phone/{phone}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getPersonWithPhone(@PathParam("phone") String phone) {
-        throw new UnsupportedOperationException();
-//        int phoneNo = Integer.parseInt(phone);
-//        return perConv.personToJson(perFacade.getPerson(new Phone(phoneNo)));
+        if (StringUtils.isNumeric(phone)) {
+            int phoneNo = Integer.parseInt(phone);
+            return perConv.personToJson(perFacade.getPerson(new Phone(phoneNo)));
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+        
     }
 
     @GET
