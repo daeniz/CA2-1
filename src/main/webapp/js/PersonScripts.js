@@ -11,6 +11,7 @@ $(function () {
     $("#listpeople").click(function (event) {
         event.preventDefault();
         $("#searchterm").show();
+        $("#searchterm2").hide();
 
         renderPersonListAll();
     });
@@ -49,21 +50,18 @@ $(function () {
                     + "</div><div class='form-group'>"
                     + "<label class='control-label col-sm-2' for='street'>Street</label><input id='street' class='input'/>"
                     + "</div><div class='form-group'>"
-                    + "<label class='control-label col-sm-2' for='city'>City</label><input id='city' class='input'/>"
-                    + "</div><div class='form-group'>"
                     + "<label class='control-label col-sm-2' for='phone'>Phone</label><input id='phone' class='input'/>"
                     + "</div><div class='form-group'>"
                     + "<label class='control-label col-sm-2' for='mail'>e-mail</label><input id='mail' class='input'/>"
                     + "<button id='editButton' class='button'>Send</button></div>"
-            
-                    + "<input type='hidden' id='id'> /form>");
+
+                    + "<input type='hidden' id='id'> </form>");
 
             $.each(list, function (index, person) {
                 $("#id").val(person.id);
                 $("#firstName").val(person.firstName);
                 $("#lastName").val(person.lastName);
                 $("#street").val(person.address.street);
-                $("#city").val(person.address.city);
                 $("#phone").val(person.phone.number);
                 $("#mail").val(person.email);
 
@@ -72,6 +70,19 @@ $(function () {
 
 
     });
+    $("#content").on("click", "#deleteperson", function (e) {
+        e.preventDefault();
+
+        var id = $(this).data("persondel");
+        $.ajax({
+            type: 'DELETE',
+            url: 'api/person/' + id,
+            dataType: 'json'
+        }).done(function () {
+            renderPersonListAll();
+        });
+    });
+
 
     $("#content").on("click", "#editButton", function (e) {
         e.preventDefault();
@@ -83,7 +94,7 @@ $(function () {
             'city': $("#city").val(),
             'phone': $("#phone").val(),
             'mail': $("#mail").val()
-        
+
         };
         $.ajax({
             type: 'PUT',
@@ -98,14 +109,16 @@ $(function () {
                 .done(function () {
                     window.console.log("success");
                     renderPersonListAll();
-                }).fail(function(){
-                    window.console.log("fail");
-                });
+                }).fail(function () {
+            window.console.log("fail");
+        });
 
     });
 
     $("#listzipcodes").on('click', function (e) {
         e.preventDefault();
+        $("#searchterm").hide();
+    $("#searchterm2").hide();
         $.get("api/company/zip", function (data) {
             var list = data == null ? [] : (data instanceof Array ? data : [data]);
             $("#content").html("<table  class='table table-striped'>" +
@@ -157,7 +170,7 @@ $(function () {
                             "<td>" + person['address']['street'] + "</td>" +
                             "<td>" + person['address']['city'] + "</td>" +
                             "<td>" + person['address']['zip'] + "</td>" +
-                            "<td><a href='#' id='editperson' data-person='" + person.id + "'>edit / </a><a href='#' id='deleteperson'>delete</a></td></tr>");
+                            "<td><a href='#' id='editperson' data-person='" + person.id + "'>edit / </a><a href='#' id='deleteperson' data-persondel='" + person.id + "'>delete</a></td></tr>");
 
 
                 });
@@ -195,7 +208,7 @@ $(function () {
                     "<td>" + person['address']['street'] + "</td>" +
                     "<td>" + person['address']['city'] + "</td>" +
                     "<td>" + person['address']['zip'] + "</td>" +
-                    "<td><a href='#' id='editperson'>edit / </a><a href='#' id='deleteperson'>delete</a></td></tr>");
+                    "<td><a href='#' id='editperson' data-person='" + person.id + "'>edit / </a><a href='#' id='deleteperson' data-persondel='" + person.id + "'>delete</a></td></tr>");
 
 
         });

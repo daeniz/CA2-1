@@ -145,16 +145,18 @@ public class PersonFacade implements IPersonFacade {
         search += "%";
         List<Person> persons = new ArrayList();
         try {
-            Query q = em.createQuery("select distinct p from Person AS p "
-                    + "LEFT JOIN p.hobbies AS h Where h.name like ?1 or "
-                    + "p.firstName like ?1 or p.lastName like ?1");
+            Query q = em.createQuery("select distinct p from Person p \n"
+                    + "LEFT JOIN p.address a\n"
+                    + "Where p.firstName like ?1 \n"
+                    + "or p.lastName like ?1\n"
+                    + "or p.address.cityInfo.city like ?1");
             q.setParameter("1", search);
             persons = q.getResultList();
         } finally {
             em.close();
         }
         return persons;
-        
+
     }
 
     @Override
@@ -174,18 +176,22 @@ public class PersonFacade implements IPersonFacade {
     @Override
     public Person editPerson(Person person) {
         EntityManager em = this.getEntityManager();
-        Person p = em.find(Person.class, person.getId());
-        p.setFirstName(person.getFirstName());
-        p.setLastName(person.getLastName());
-        p.setEmail(person.getEmail());
-        p.getAddress().setStreet(person.getAddress().getStreet());
+        Person p = null;
         try {
+            
+            p = em.find(Person.class, person.getId());
+            p.setFirstName(person.getFirstName());
+            p.setLastName(person.getLastName());
+            p.setEmail(person.getEmail());
+            p.getAddress().setStreet(person.getAddress().getStreet());
             em.getTransaction().begin();
             em.merge(p);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
+        System.out.println(p.getFirstName());
+
         return p;
     }
 
@@ -223,7 +229,9 @@ public class PersonFacade implements IPersonFacade {
 
         }
         return p;
-    };
+    }
+
+    ;
     
     @Override
     public EntityManager getEntityManager() {

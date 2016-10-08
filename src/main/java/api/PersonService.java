@@ -20,6 +20,7 @@ import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -142,9 +143,22 @@ public class PersonService {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public String editPerson(String json) {
+        System.out.println("ASDFSDAFFDSAFDName");
+
         Person p = gson.fromJson(json, Person.class);
-        p = perFacade.editPerson(p);
-        return gson.toJson(p);
+        System.out.println("1111ASDFSDAFFDSAFDName");
+
+        Person p1 = perFacade.editPerson(p);
+        System.out.println(p1 + "Name");
+        return perConv.personToJson(p1);
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deletePerson(@PathParam("id") int id, String json) {
+        Person p = perFacade.deletePerson(id);
+        return perConv.personToJson(p);
     }
 
 }

@@ -98,12 +98,19 @@ public class CompanyService {
         companies = comFacade.getCompanies(zip);
         return jsc.companiesJson(companies);
     }
-    
+
     @GET
     @Path("search/{searchstring}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=Cp1252")
     public String getSearch(@PathParam("searchstring") String search) {
-        return jsc.companiesJson(comFacade.searchCompany(search));
+        if (search != null || !search.equalsIgnoreCase("")) {
+            return jsc.companiesJson(comFacade.searchCompany(search));
+
+        }else{
+            return jsc.companiesJson(comFacade.getCompanies());
+        }
+            
+
     }
 
     @GET
@@ -113,7 +120,7 @@ public class CompanyService {
         List<CityInfo> zips;
         zips = comFacade.getZipcodes();
         return gson.toJson(zips);
-        
+
     }
 
     @POST
