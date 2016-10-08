@@ -146,4 +146,12 @@ public class PersonService {
 //        return perConv.personsToJson(persons);
     }
 
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public String editPerson(String json) {
+        Person p = gson.fromJson(json, Person.class);
+        p = perFacade.editPerson(p);
+        return gson.toJson(p);
+    }
+
 }

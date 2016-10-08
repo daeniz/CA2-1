@@ -42,7 +42,7 @@ $(function () {
 
         $.get("api/person/complete/" + id, function (data) {
             var list = data == null ? [] : (data instanceof Array ? data : [data]);
-            $("#content").html("<form class='form-horizontal'><div class='form-group'>" 
+            $("#content").html("<form class='form-horizontal'><div class='form-group'>"
                     + "<label class='control-label col-sm-2' for='firstName'>First Name</label><input id='firstName' class='input'/>"
                     + "</div><div class='form-group'>"
                     + "<label class='control-label col-sm-2' for='lastName'>Last Name</label><input id='lastName' class='input'/>"
@@ -55,20 +55,52 @@ $(function () {
                     + "</div><div class='form-group'>"
                     + "<label class='control-label col-sm-2' for='mail'>e-mail</label><input id='mail' class='input'/>"
                     + "<button id='editButton' class='button'>Send</button></div>"
-                    + "</form>");
+            
+                    + "<input type='hidden' id='id'> /form>");
 
             $.each(list, function (index, person) {
-
+                $("#id").val(person.id);
                 $("#firstName").val(person.firstName);
                 $("#lastName").val(person.lastName);
                 $("#street").val(person.address.street);
                 $("#city").val(person.address.city);
                 $("#phone").val(person.phone.number);
-                $("#mail").val(person.mail);
-                
+                $("#mail").val(person.email);
+
             });
         }, "json");
 
+
+    });
+
+    $("#content").on("click", "#editButton", function (e) {
+        e.preventDefault();
+        var formData = {
+            'id': $("#id").val(),
+            'firstName': $("#firstName").val(),
+            'lastName': $("#lastName").val(),
+            'street': $("#street").val(),
+            'city': $("#city").val(),
+            'phone': $("#phone").val(),
+            'mail': $("#mail").val()
+        
+        };
+        $.ajax({
+            type: 'PUT',
+            url: 'api/person',
+            data: JSON.stringify(formData),
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+                .done(function () {
+                    window.console.log("success");
+                    renderPersonListAll();
+                }).fail(function(){
+                    window.console.log("fail");
+                });
 
     });
 

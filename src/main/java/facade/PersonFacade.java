@@ -175,15 +175,19 @@ public class PersonFacade implements IPersonFacade {
     @Override
     public Person editPerson(Person person) {
         EntityManager em = this.getEntityManager();
-
+        Person p = em.find(Person.class, person.getId());
+        p.setFirstName(person.getFirstName());
+        p.setLastName(person.getLastName());
+        p.setEmail(person.getEmail());
+        p.getAddress().setStreet(person.getAddress().getStreet());
         try {
             em.getTransaction().begin();
-            em.merge(person);
+            em.merge(p);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return person;
+        return p;
     }
 
     @Override
